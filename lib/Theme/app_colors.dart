@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 int theme_ = 0;
 
-class MyColors {
+class AppColors {
+  //? ------------------------- BG Color -------------------------
+  static const Color _bgColor1 = Color(0xFF021827); // Dark Blue
+  // Method
+  // static Color bgColor() => _bgColor1;
+  static Color bgColor() => Colors.white60;
+
   //? -------------------- Main Menu BG Color --------------------
   static const Color _mainMenuBG_1 = Color(0x4d000000);
   // Method

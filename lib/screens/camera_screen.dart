@@ -2,8 +2,16 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:geo_cam/Theme/app_styles.dart';
+import 'package:geo_cam/screens/top_menu_widget.dart';
+import 'package:geo_cam/utils/app_layout.dart';
 
-import 'top_menu_funtions.dart';
+import '../Theme/app_colors.dart';
+import '../Theme/app_consts.dart';
+import '../Theme/app_icons.dart';
+import '../screens/camera_settings.dart';
+import '../screens/top_menu_funtions.dart';
+import '../utils/handel_exceptions.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras; // List of available cameras
@@ -17,96 +25,45 @@ class _CameraScreenState extends State<CameraScreen> {
   late CameraController _cameraController; // Camera Controller
   //Future to wait until camera initializes
   late Future<void> _initializeControllerFuture;
-  final int _initialCamera = 0;
+  // final int _initialCamera = 0;
   List<File> capturedImages = [];
 
-  // void initializeCamere(int cameraIndex, {ResolutionPreset? resolutionPreset}) async {
-  //   _cameraController = CameraController(
-  //     // Get a specific camera from the list of available cameras.
-  //     widget.cameras[cameraIndex],
-  //     // Define the resolution to use.
-  //     resolutionPreset ?? ResolutionPreset.medium,
-  //     //Enable Audio?
-  //     enableAudio: false,
-  //   );
-
-  //   _initializeControllerFuture = _cameraController.initialize().then((_) {
-  //     if (!mounted) return;
-  //     setState(() {});
-  //   }).catchError((e) {
-  //     if (e is CameraException) print("Camera Exception:\n" + e.code);
-  //     // if (e is CameraException) {
-  //     //   switch (e.code) {
-  //     //     case 'CameraAccessDenied':
-  //     //       // Handle access errors here.
-  //     //       break;
-  //     //     default:
-  //     //       // Handle other errors here.
-  //     //       break;
-  //     //   }
-  //     // }
-  //   });
-  // }
-
-  // void changeCamere(int cameraIndex, {ResolutionPreset? resolutionPreset, bool? audio}) async {
-  //   _cameraController = CameraController(
-  //     // Get a specific camera from the list of available cameras.
-  //     widget.cameras[cameraIndex],
-  //     // Define the resolution to use.
-  //     resolutionPreset ?? ResolutionPreset.medium,
-  //     //Enable Audio?
-  //     enableAudio: audio ?? false,
-  //   );
-
-  //   _initializeControllerFuture = _cameraController.initialize();
-  // }
-
-  @override
-  // void initState() {
-  //   super.initState();
-  //   initializeCamere(_initialCamera);
-  // }
-
-  // void initState() {
-  //   super.initState();
-  //   _cameraController = CameraController(widget.cameras[0], ResolutionPreset.max);
-  //   _cameraController.initialize().then((_) {
-  //     if (!mounted) {
-  //       return;
-  //     }
-  //     setState(() {});
-  //   }).catchError((Object e) {
-  //     if (e is CameraException) {
-  //       switch (e.code) {
-  //         case 'CameraAccessDenied':
-  //           // Handle access errors here.
-  //           break;
-  //         default:
-  //           // Handle other errors here.
-  //           break;
-  //       }
-  //     }
-  //   });
-  // }
-
-  void initState() {
-    super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
+  void initializeCamera({
+    CameraDescription? description,
+    ResolutionPreset? resolutionPreset,
+    bool? audio,
+  }) async {
     _cameraController = CameraController(
       // Get a specific camera from the list of available cameras.
-      widget.cameras[0],
+      // If camera description is not passed then the first camera is taken from the list
+      description ?? widget.cameras[0],
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      resolutionPreset ?? CameraSettings.resolution,
+      //Enable Audio?
+      enableAudio: audio ?? false,
     );
 
     // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _cameraController.initialize();
+    _initializeControllerFuture = _cameraController.initialize().then((_) {
+      if (!mounted) return;
+      setState(() {});
+    }).catchError((e) {
+      if (e is CameraException) {
+        print("Camera Exception:\n${e.code}\n");
+        handelCameraExceptions(e);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // initializeCamera();
   }
 
   @override
   void dispose() {
-    // _cameraController.dispose();
+    _cameraController.dispose();
     super.dispose();
   }
 
@@ -115,22 +72,154 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        // width: 430,
-        // height: 85,
-        color: const Color.fromARGB(255, 122, 73, 28),
-        child: SafeArea(
-          child: Column(children: [
-            Row(children: [
-              IconButton(
-                onPressed: () => flashbutton(),
-                // onPressed: () => flashbutton(_cameraController),
-                icon: const Icon(Icons.flash_on),
+      backgroundColor: AppColors.bgColor(),
+      body: SizedBox(
+        height: AppLayout.getScreenHeight(),
+        child: Stack(
+          children: [
+            //? Top Menu
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: menuPadH,
+                vertical: menuPadV,
               ),
-            ]),
+              color: AppColors.mainMenuBG(),
+              width: AppLayout.getScreenWidth(),
+              child: SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //? Flash Button
+                    TopMenuItem(fun: () => flashButton(), icon: Icons.flash_on),
+
+                    //? File Button
+                    TopMenuItem(fun: () => fileButton(), icon: Icons.file_copy_outlined),
+
+                    //? Folder Button
+                    TopMenuItem(fun: () => folderButton(), icon: Icons.folder_open_outlined),
+
+                    //? Ham Menu Button
+                    TopMenuItem(fun: () => menuButton(), icon: Icons.menu_open_outlined)
+                  ],
+                ),
+              ),
+            ),
+
+            //? Camera Live Preview
             // cameraPreview(),
-          ]),
+
+            //? Bottom Menu
+            Positioned(
+              bottom: 0,
+              // height: AppLayout.getScreenHeight(),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: menuPadH,
+                  vertical: menuPadV,
+                ),
+                color: AppColors.mainMenuBG(),
+                width: AppLayout.getScreenWidth(),
+                child: SafeArea(
+                  top: false,
+                  child: Column(
+                    children: [
+                      //? Swipe Bar
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Container(
+                          width: 55,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.menuIcon(),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+
+                      //? Camera Mode
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Photo",
+                              style: AppStyles.menuText,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      //? Action Buttons
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 46),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //? Gallery Button
+                            GestureDetector(
+                              onTap: () => showGallery(),
+                              child: Container(
+                                height: AppLayout.getHeight(76),
+                                width: AppLayout.getWidth(76),
+                                decoration: BoxDecoration(
+                                  color: const Color(0x797D7D7D),
+                                  image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                      "assets/images/test/Wallpaper_1.jpg",
+                                    ),
+                                  ),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                            ),
+
+                            //? Stutter Button
+                            GestureDetector(
+                              onTap: () => captureImage(),
+                              child: Container(
+                                // padding: const EdgeInsets.symmetric(horizontal: 170),
+                                height: AppLayout.getHeight(91),
+                                width: AppLayout.getWidth(91),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                    color: const Color(0x797D7D7D),
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            //? Camera Flip Button
+                            GestureDetector(
+                              onTap: () => flipCamera(),
+                              child: Container(
+                                height: AppLayout.getHeight(76),
+                                width: AppLayout.getWidth(76),
+                                decoration: BoxDecoration(
+                                  color: const Color(0x15FFFFFF),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                // child: const Icon(Icons.camera),
+                                child: const Icon(
+                                  AppIcons.camera_flip,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -138,47 +227,58 @@ class _CameraScreenState extends State<CameraScreen> {
 
   //? ----------------------- Internal Funtions -----------------------
 
-  // FutureBuilder<void> cameraPreview() {
-  //   return FutureBuilder<void>(
-  //     future: _initializeControllerFuture,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         return CameraPreview(_cameraController);
-  //       }
+  //? To show camera preview
+  FutureBuilder<void> cameraPreview() {
+    return FutureBuilder<void>(
+      future: _initializeControllerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return CameraPreview(_cameraController);
+        }
 
-  //       return const Center(child: CircularProgressIndicator());
-  //     },
-  //   );
-  // }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
 
-//   void captureImage() async {
-//     await _initializeControllerFuture;
-//     XFile xFile = await _cameraController.takePicture();
+  void captureImage() async {
+    print('Camera Stutter Button Clicked');
 
-//     setState(() {
-//       capturedImages.add(File(xFile.path));
-//     });
-//   }
+    // await _initializeControllerFuture;
+    // XFile xFile = await _cameraController.takePicture();
 
-//   void flipCamera() {
-//     if (widget.cameras.length < 2) {
-//       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-//         content: Text('Secondary camera not found!'),
-//         duration: Duration(seconds: 2),
-//       ));
-//       return;
-//     }
+    // setState(() {
+    //   capturedImages.add(File(xFile.path));
+    // });
+  }
 
-//     final lensDirection = _cameraController.description.lensDirection;
+  void flipCamera() {
+    print('Camera Flip Button Clicked');
+    // if (widget.cameras.length < 2) {
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //     content: Text('Secondary camera not found!'),
+    //     duration: Duration(seconds: 2),
+    //   ));
+    //   return;
+    // }
 
-//     CameraDescription newCam = widget.cameras.firstWhere(
-//       (description) => lensDirection == CameraLensDirection.back
-//           ? description.lensDirection == CameraLensDirection.front
-//           : description.lensDirection == CameraLensDirection.back,
-//     );
+    // final lensDirection = _cameraController.description.lensDirection;
 
-//     // setState(() {
-//     //   cam =
-//     // });
-//   }
+    // CameraDescription newCam = widget.cameras.firstWhere(
+    //   (description) => lensDirection == CameraLensDirection.back
+    //       ? description.lensDirection == CameraLensDirection.front
+    //       : description.lensDirection == CameraLensDirection.back,
+    // );
+
+    // setState(() {
+    //   initializeCamera(
+    //     description: newCam,
+    //     audio: CameraSettings.isPhotoMode ? true : false,
+    //   );
+    // });
+  }
+
+  void showGallery() {
+    print('Camera Gallery Button Clicked');
+  }
 }

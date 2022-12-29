@@ -40,6 +40,7 @@ dependencies:
   path_provider:
   path:
   get: ^4.6.5
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -64,9 +65,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/
+    - assets/images/test/
+    # - assets/images/test/Wallpaper_1.jpg
+    # - assets/icons/
+    # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -79,7 +83,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family:  app_icon
+      fonts:
+        - asset: assets/icons/fonts_icon/app_icon.ttf
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

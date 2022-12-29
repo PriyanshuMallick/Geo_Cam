@@ -1,0 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:geo_cam/Theme/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class AppStyles {
+  static TextStyle menuText = GoogleFonts.roboto(
+    fontSize: 14,
+    color: AppColors.textColor1,
+    fontWeight: FontWeight.w500,
+  );
+}
