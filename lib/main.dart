@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/camera_screen.dart';
+import 'camera_screen/camera_screen.dart';
 import 'utils/handel_exceptions.dart';
 
 void main() async {

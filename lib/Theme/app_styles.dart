@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geo_cam/Theme/app_colors.dart';
+import 'package:geo_cam/theme/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppStyles {
