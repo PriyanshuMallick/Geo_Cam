@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppStyles {
   static TextStyle menuText = GoogleFonts.roboto(
-    fontSize: 14,
+    fontSize: 12,
     color: AppColors.textColor1,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w900,
   );
 }

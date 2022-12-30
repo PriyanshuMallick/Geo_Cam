@@ -25,4 +25,12 @@ class AppLayout {
     double x = sWidth / pixels;
     return sWidth / x;
   }
+
+  static getHeightPercent(double percent) {
+    return (percent * getScreenHeight()) / 100;
+  }
+
+  static getWidthPercent(double percent) {
+    return (percent * getScreenWidth()) / 100;
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-int theme_ = 0;
+int theme_ = 2;
 
 class AppColors {
   //? ------------------------- BG Color -------------------------
@@ -30,18 +30,21 @@ class AppColors {
   static Color oPTimer() => _oPTimer_1;
 
   //? -------------------- Selected Option BG Color --------------------
-  static const Color _oPSelected_1 = Color(0xffd4a108);
-  static const Color _oPSelected_2 = Color(0xffe85a5a);
+
+  static final List<Color> _opSelected = [
+    const Color(0xffd4a108),
+    const Color(0xffe85a5a),
+    const Color(0xff2196F3),
+  ];
   // Method
-  static Color oPSelected() {
-    if (theme_ == 1) return _oPSelected_2;
-    return _oPSelected_1;
+  static Color opSelected() {
+    return _opSelected[theme_];
   }
 
   //? -------------------- Not Selected Option BG Color --------------------
-  static const Color _oPNotSelected_1 = Color(0xff171717);
+  static const Color _opNotSelected_1 = Color(0xff171717);
   // Method
-  static Color oPNotSelected() => _oPNotSelected_1;
+  static Color opNotSelected() => _opNotSelected_1;
 
   //? -------------------- Text Color --------------------
   static const Color textColor1 = Colors.white;
