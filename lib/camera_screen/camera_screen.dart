@@ -80,8 +80,8 @@ class _CameraScreenState extends State<CameraScreen> {
             //? Top Menu
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: menuPadH,
-                vertical: menuPadV,
+                horizontal: AppConsts.menuPadH,
+                vertical: AppConsts.menuPadV,
               ),
               color: AppColors.mainMenuBG(),
               width: AppLayout.getScreenWidth(),
@@ -113,8 +113,8 @@ class _CameraScreenState extends State<CameraScreen> {
               bottom: 0,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: menuPadH,
-                  vertical: menuPadV,
+                  horizontal: AppConsts.menuPadH,
+                  vertical: AppConsts.menuPadV,
                 ),
                 color: AppColors.mainMenuBG(),
                 height: AppLayout.getHeight(244),
@@ -124,18 +124,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     Column(
                       children: [
                         //? Swipe Bar
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Container(
-                            width: 55,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.menuIcon(),
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(5)),
-                          ),
-                        ),
+                        const SwipeBar(),
 
                         //? Camera Mode
                         Container(
