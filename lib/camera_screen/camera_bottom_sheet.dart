@@ -34,13 +34,13 @@ List<Widget> addBottomBtns() {
 
 List<Widget> addBottomFatMenuBtns() {
   List<Widget> list = [];
-  for (int i = 0; i < bottomSheetMenus.length; i += 2) {
+  for (int i = 0; i < bottomSheetFatMenus.length; i++) {
     list.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          OptionBtnFat(menu: bottomSheetMenus[i]),
-          OptionBtnFat(menu: bottomSheetMenus[i + 1]),
+          OptionBtnFat(menu: bottomSheetFatMenus[i]),
+          OptionBtnFat(menu: bottomSheetFatMenus[++i]),
         ],
       ),
     );
@@ -49,10 +49,12 @@ List<Widget> addBottomFatMenuBtns() {
 }
 
 List<Widget> addBottomSlimMenuBtns() {
-  List<Widget> list = [
-    const OpitonBtnSlim(),
-    const OpitonBtnSlim(),
-  ];
+  List<Widget> list = [];
+  for (int i = 0; i < bottomSheetSlimMenus.length; i++) {
+    list.add(
+      OpitonBtnSlim(map: bottomSheetSlimMenus[i]),
+    );
+  }
 
   return list;
 }

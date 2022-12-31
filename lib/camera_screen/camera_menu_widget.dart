@@ -105,15 +105,22 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
 //? ------------------------------------- Option Button: Slim ------------------------------------
 
 class OpitonBtnSlim extends StatefulWidget {
-  const OpitonBtnSlim({super.key});
+  final Map<int, dynamic> map;
 
+  const OpitonBtnSlim({super.key, required this.map});
   @override
   State<OpitonBtnSlim> createState() => _OpitonBtnSlimState();
 }
 
 class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
+  bool isCapsuleColorChanged = false;
+  int capsulePos = 0;
+  Color optionSeletedColor = AppColors.opSelected();
+
   @override
   Widget build(BuildContext context) {
+    setCapsuleColor(widget.map, capsulePos + 1);
+
     return Container(
       height: AppConsts.opitonBtnSlimHL,
       width: AppConsts.opitonBtnSlimWL,
@@ -124,14 +131,14 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
       child: Stack(
         children: [
           Positioned(
-            left: (AppConsts.opitonBtnSlimWL / 4) * 3,
+            left: (AppConsts.opitonBtnSlimWL / (widget.map.length - 1)) * capsulePos,
             top: (AppConsts.opitonBtnSlimHL - AppConsts.opitonBtnSlimHS) / 2,
             child: Center(
               child: Container(
                 height: AppConsts.opitonBtnSlimHS,
                 width: AppConsts.opitonBtnSlimWS,
                 decoration: BoxDecoration(
-                    color: AppColors.opSelected(),
+                    color: optionSeletedColor,
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                       strokeAlign: StrokeAlign.center,
@@ -144,28 +151,76 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
           SizedBox.expand(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Test',
-                  style: AppStyles.menuText,
-                ),
-                Text(
-                  'Test',
-                  style: AppStyles.menuText,
-                ),
-                Text(
-                  'Test',
-                  style: AppStyles.menuText,
-                ),
-                Text(
-                  'Test',
-                  style: AppStyles.menuText,
-                ),
-              ],
+              children: addElementsFromMap(widget.map),
             ),
           ),
         ],
       ),
     );
+  }
+
+  List<Widget> addElementsFromMap(Map<int, dynamic> map) {
+    List<Widget> list = [];
+    for (int i = 1; i < map.length; i++) {
+      list.add(
+        GestureDetector(
+          onTap: () => {
+            // Changes Camera Settings
+            map[0]['setting'] = map[0]['settings'][i - 1],
+
+            // Updated Capsule Position
+            capsulePos = i - 1,
+
+            // Changes Capsule color is the Text feild is Null
+            // And user has a costum color to set for capsule
+            setCapsuleColor(map, i),
+
+            setState(() {}),
+          },
+          child: Container(
+            height: AppConsts.opitonBtnSlimHL,
+            width: AppConsts.opitonBtnSlimWL / map.length,
+            color: Colors.transparent,
+            child: Center(
+              child: map[i]['text'] != null
+                  ? Text(
+                      map[i]['text'],
+                      style: AppStyles.menuText,
+                      textAlign: TextAlign.center,
+                    )
+                  : Icon(
+                      map[i]['icon'],
+                      size: map[i]['iconSize'],
+                      color: AppColors.menuIcon(),
+                    ),
+            ),
+          ),
+        ),
+      );
+    }
+    return list;
+  }
+
+  setCapsuleColor(Map<int, dynamic> map, int i) {
+    // Checks if 'text' feild is null
+    bool isNull = map[i]['text'] == null ? true : false;
+
+    // returns is both 'text' and 'activeColor' feild null
+    if (isNull && map[i]['activeColor'] == null) return;
+
+    // if 'text' feild is null set Capsule color to 'activeColor'
+    if (isNull) {
+      optionSeletedColor = map[i]['activeColor'];
+      isCapsuleColorChanged = true;
+      return;
+    }
+
+    // if Capsule color is changed and 'text' feild is not null
+    // set Capsule color to default theme color
+    if (isCapsuleColorChanged && !isNull) {
+      optionSeletedColor = AppColors.opSelected();
+      isCapsuleColorChanged = false;
+      return;
+    }
   }
 }
