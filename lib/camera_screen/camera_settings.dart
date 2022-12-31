@@ -12,4 +12,14 @@ class CameraSettings {
   static bool isWatermark = false;
   static bool isSaveOriginal = false;
   static bool isMapTag = false;
+
+  //? Set Timer
+
+  static final List<int> timerSettings = [0, 3, 5, 10];
+  static int timer = 0;
+
+  //? Set Camera Ratio
+
+  static final List<int> cameraRatioSettings = [0, 1, 2, 3];
+  static int cameraRatio = 0;
 }
