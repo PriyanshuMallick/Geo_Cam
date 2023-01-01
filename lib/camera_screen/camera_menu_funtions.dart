@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 
 import '../Theme/app_icons.dart';
-import '../funtionality_list/bottom_sheet_menu_list.dart';
+import '../funtionality_list/bottom_sheet_fat_menu_list.dart';
 import 'camera_bottom_sheet.dart';
 import 'camera_menu_widget.dart';
 import 'camera_settings.dart';
