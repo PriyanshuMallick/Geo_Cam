@@ -6,31 +6,31 @@ class AppLayout {
     return MediaQuery.of(context).size;
   }
 
-  static getScreenHeight() {
+  static double getScreenHeight() {
     return Get.height;
   }
 
-  static getScreenWidth() {
+  static double getScreenWidth() {
     return Get.width;
   }
 
-  static getHeight(double pixels) {
+  static double getHeight(double pixels) {
     double sHeight = getScreenHeight();
     double x = sHeight / pixels;
     return sHeight / x;
   }
 
-  static getWidth(double pixels) {
+  static double getWidth(double pixels) {
     double sWidth = getScreenWidth();
     double x = sWidth / pixels;
     return sWidth / x;
   }
 
-  static getHeightPercent(double percent) {
+  static double getHeightPercent(double percent) {
     return (percent * getScreenHeight()) / 100;
   }
 
-  static getWidthPercent(double percent) {
+  static double getWidthPercent(double percent) {
     return (percent * getScreenWidth()) / 100;
   }
 }
