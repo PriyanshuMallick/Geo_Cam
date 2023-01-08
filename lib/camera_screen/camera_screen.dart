@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_cam/camera_screen/camera_menu_widget.dart';
+import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 
 import '../camera_screen/camera_settings.dart';
+import '../widget/swipe_bar.dart';
 import 'camera_menu_funtions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_consts.dart';

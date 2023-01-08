@@ -5,7 +5,8 @@ import '../funtionality_list/bottom_sheet_slim_menu_list.dart';
 import '../utils/app_layout.dart';
 import '../widget/option_button_fat_.dart';
 import '../widget/option_button_slim.dart';
-import 'camera_menu_widget.dart';
+import '../widget/swipe_bar.dart';
+import '../widget/top_menu_items.dart';
 
 class CameraBottomSheet extends StatelessWidget {
   const CameraBottomSheet({
