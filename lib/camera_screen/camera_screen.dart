@@ -14,8 +14,7 @@ import '../theme/app_icons.dart';
 import '../utils/handel_exceptions.dart';
 
 class CameraScreen extends StatefulWidget {
-  final List<CameraDescription> cameras; // List of available cameras
-  const CameraScreen({super.key, required this.cameras});
+  const CameraScreen({super.key});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -36,7 +35,7 @@ class _CameraScreenState extends State<CameraScreen> {
     _cameraController = CameraController(
       // Get a specific camera from the list of available cameras.
       // If camera description is not passed then the first camera is taken from the list
-      description ?? widget.cameras[0],
+      description ?? CameraSettings.cameras[0],
       // Define the resolution to use.
       resolutionPreset ?? CameraSettings.resolution,
       //Enable Audio?
@@ -58,12 +57,12 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-    // initializeCamera();
+    initializeCamera();
   }
 
   @override
   void dispose() {
-    // _cameraController.dispose();
+    _cameraController.dispose();
     super.dispose();
   }
 
@@ -77,7 +76,17 @@ class _CameraScreenState extends State<CameraScreen> {
         height: AppLayout.getScreenHeight(),
         child: Stack(
           children: [
-            //? Top Menu
+            //? ------------------------------------------ Camera Live Preview ------------------------------------------
+            SafeArea(
+              top: CameraSettings.safeAreaCamTop,
+              bottom: CameraSettings.safeAreaCamBottom,
+              child: Padding(
+                padding: EdgeInsets.only(top: AppLayout.getHeight(51)),
+                child: cameraPreview(),
+              ),
+            ),
+
+            //? ----------------------------------------------- Top Menu -----------------------------------------------
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppConsts.menuPadH,
@@ -105,10 +114,7 @@ class _CameraScreenState extends State<CameraScreen> {
               ),
             ),
 
-            //? Camera Live Preview
-            // cameraPreview(),
-
-            //? Bottom Menu
+            //? ---------------------------------------------- Bottom Menu ----------------------------------------------
             Positioned(
               bottom: 0,
               child: Container(
@@ -126,7 +132,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         //? Swipe Bar
                         const SwipeBar(),
 
-                        //? Camera Mode
+                        //? Camera Modes
                         Container(
                           padding: const EdgeInsets.all(10),
                           child: Row(
@@ -169,7 +175,6 @@ class _CameraScreenState extends State<CameraScreen> {
                             GestureDetector(
                               onTap: () => captureImage(),
                               child: Container(
-                                // padding: const EdgeInsets.symmetric(horizontal: 170),
                                 height: AppLayout.getHeight(91),
                                 width: AppLayout.getWidth(91),
                                 decoration: BoxDecoration(
