@@ -4,10 +4,11 @@ int theme_ = 2;
 
 class AppColors {
   //? ------------------------- BG Color -------------------------
-  static const Color _bgColor1 = Color(0xFF021827); // Dark Blue
+  // static const Color _bgColor1 = Color(0xFF021827); // Dark Blue
   // Method
   // static Color bgColor() => _bgColor1;
-  static Color bgColor() => Colors.white60;
+  static Color bgColor() => Colors.black;
+  // static Color bgColor() => Colors.white60;
 
   //? -------------------- Main Menu BG Color --------------------
   static const Color _mainMenuBG_1 = Color(0x4d000000);

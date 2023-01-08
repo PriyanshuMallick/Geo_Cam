@@ -22,4 +22,12 @@ class CameraSettings {
 
   static final List<int> cameraRatioSettings = [0, 1, 2, 3];
   static int cameraRatio = 0;
+
+  //? Cameras
+
+  static late final List<CameraDescription> cameras;
+
+  //? SafeArea for Camera Preview in the main Screen
+  static bool safeAreaCamTop = true;
+  static bool safeAreaCamBottom = true;
 }

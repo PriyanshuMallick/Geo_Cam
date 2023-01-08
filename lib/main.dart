@@ -2,31 +2,32 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_screen/camera_screen.dart';
+import '___test/camera_screen_test.dart';
+import 'camera_screen/camera_settings.dart';
 import 'utils/handel_exceptions.dart';
 
+// late final List<CameraDescription> cameras;
 void main() async {
-  List<CameraDescription> cameras = [];
   try {
     WidgetsFlutterBinding.ensureInitialized();
 
     // Get the list of cameras
-    cameras = await availableCameras();
+    CameraSettings.cameras = await availableCameras();
   } catch (e) {
     handelCameraExceptions(e);
   }
-  runApp(MyApp(cameras: cameras));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final List<CameraDescription> cameras; // List of available cameras
-  const MyApp({super.key, required this.cameras});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Geo Cam',
       debugShowCheckedModeBanner: false,
-      home: CameraScreen(cameras: cameras),
+      home: CameraScreen(),
     );
   }
 }
