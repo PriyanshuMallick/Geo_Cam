@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
@@ -21,7 +22,7 @@ class CameraScreen extends StatefulWidget {
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen> {
+class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver {
   late CameraController _cameraController; // Camera Controller
   //Future to wait until camera initializes
   late Future<void> _initializeControllerFuture;
@@ -40,7 +41,9 @@ class _CameraScreenState extends State<CameraScreen> {
       // Define the resolution to use.
       resolutionPreset ?? CameraSettings.resolution,
       //Enable Audio?
-      enableAudio: audio ?? false,
+      enableAudio: audio ?? CameraSettings.isVideoMode,
+
+      imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -57,14 +60,36 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void initState() {
-    super.initState();
+    // Hide the status bar
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+
     initializeCamera();
+    super.initState();
   }
 
   @override
   void dispose() {
     _cameraController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final CameraController cameraController = _cameraController;
+
+    if (!cameraController.value.isInitialized) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+      return;
+    }
+
+    if (state == AppLifecycleState.resumed) {
+      initializeCamera(description: cameraController.description);
+      return;
+    }
   }
 
   //? -------------------------- UI --------------------------
@@ -82,7 +107,7 @@ class _CameraScreenState extends State<CameraScreen> {
               top: CameraSettings.safeAreaCamTop,
               bottom: CameraSettings.safeAreaCamBottom,
               child: Padding(
-                padding: EdgeInsets.only(top: AppLayout.getHeight(51)),
+                padding: EdgeInsets.only(top: AppLayout.getHeight(52)),
                 child: cameraPreview(),
               ),
             ),
@@ -228,15 +253,18 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  //? ----------------------- Internal Funtions -----------------------
+  //? ------------------------------------------ Internal Funtions ------------------------------------------
 
-  //? To show camera preview
+  //? ---------------------------------------- To show camera preview ----------------------------------------
   FutureBuilder<void> cameraPreview() {
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return CameraPreview(_cameraController);
+          return AspectRatio(
+            aspectRatio: 3 / 4,
+            child: CameraPreview(_cameraController),
+          );
         }
 
         return const Center(child: CircularProgressIndicator());
