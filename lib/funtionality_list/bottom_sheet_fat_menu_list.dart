@@ -5,6 +5,8 @@ import 'package:geo_cam/camera_screen/camera_settings.dart';
 List<Map<String, dynamic>> bottomSheetFatMenus = [
   {
     'name': 'Mirror',
+    'onTap': () => CameraSettings.isMirror = CameraSettings.isMirror ? false : true,
+    'isButtonOn': () => CameraSettings.isMirror,
     'setting': CameraSettings.isMirror,
     'icon': AppIcons.mirror_outline,
     'iconSize': 30.0,

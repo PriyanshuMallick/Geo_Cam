@@ -7,10 +7,19 @@ import '../theme/app_styles.dart';
 import '../utils/app_layout.dart';
 
 class OptionBtnFat extends StatefulWidget {
-  final Map menu;
+  // final Map menu;
+  final String name;
+  final IconData icon;
+  final double iconSize;
+  final Function onTap;
+  final ValueGetter<bool> isButtonOn;
   const OptionBtnFat({
     super.key,
-    required this.menu,
+    required this.name,
+    required this.icon,
+    required this.iconSize,
+    required this.onTap,
+    required this.isButtonOn,
   });
 
   @override
@@ -22,14 +31,15 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => setState(() {
-        widget.menu['setting'] = widget.menu['setting'] ? false : true;
+        widget.onTap();
+        // widget.isButtonOn = widget.isButtonOn ? false : true;
       }),
       //? Button
       child: Container(
         height: AppLayout.getHeight(86),
         width: AppLayout.getWidth(160),
         decoration: BoxDecoration(
-          color: widget.menu['setting'] ? AppColors.opSelected() : AppColors.opNotSelected(),
+          color: widget.isButtonOn() ? AppColors.opSelected() : AppColors.opNotSelected(),
           borderRadius: BorderRadius.circular(27),
         ),
         child: Padding(
@@ -39,14 +49,14 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
             children: [
               //? Icon
               Icon(
-                widget.menu['icon'],
-                size: widget.menu['iconSize'],
+                widget.icon,
+                size: widget.iconSize,
                 color: AppColors.menuIcon(),
               ),
 
               //? Text
               Text(
-                widget.menu['name'].toUpperCase(),
+                widget.name.toUpperCase(),
                 style: AppStyles.menuText,
                 textAlign: TextAlign.center,
               ),
