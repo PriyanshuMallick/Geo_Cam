@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 
+import '../theme/app_consts.dart';
+
 class CameraSettings {
   //?------------------------------------- Cameras-------------------------------------
 
@@ -20,13 +22,22 @@ class CameraSettings {
 
   //?------------------------------------ Set Timer------------------------------------
 
-  static final List<int> timerSettings = [0, 3, 5, 10];
-  static int timer = 0;
+  static int timerCapsulePos = 1;
+
+  static final List<int> timerOptions = [0, 3, 5, 10];
+  static int timer = timerOptions[timerCapsulePos];
 
   //?--------------------------------- Set Camera Ratio---------------------------------
+  static int cameraRatioCapsulePos = 1;
 
-  static final List<int> cameraRatioSettings = [0, 1, 2, 3];
-  static int cameraRatio = 1;
+  static final List<double> cameraRatioOptions = [
+    1,
+    3 / 4, // Default
+    9 / 16,
+    AppConsts.screenWidth / AppConsts.screenHeight, // Full Screen
+  ];
+
+  static double cameraRatio = cameraRatioOptions[cameraRatioCapsulePos];
 
   //?------------------ SafeArea for Camera Preview in the main Screen------------------
   static bool safeAreaCamTop = true;

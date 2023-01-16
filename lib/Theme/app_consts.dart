@@ -5,6 +5,9 @@
 import '../utils/app_layout.dart';
 
 class AppConsts {
+  static final double screenHeight = AppLayout.getScreenHeight();
+  static final double screenWidth = AppLayout.getScreenWidth();
+
   static const double menuPadH = 12;
   static const double menuPadV = 2;
 

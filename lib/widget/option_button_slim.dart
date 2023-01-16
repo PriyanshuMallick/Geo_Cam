@@ -47,10 +47,10 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
         GestureDetector(
           onTap: () => {
             // Changes Camera Settings
-            map[0]['setting'] = map[0]['settings'][i - 1],
+            map[0]['selectOption'](i - 1),
 
             // Updated Capsule Position
-            Capsule.capsulePos = i - 1,
+            map[0]['setCapsulePos'](i - 1),
 
             // Changes Capsule color is the Text feild is Null
             // And user has a costum color to set for capsule
@@ -91,12 +91,12 @@ class Capsule extends StatelessWidget {
 
   final Map<int, dynamic> map;
 
-  static int capsulePos = 0;
   static bool isCapsuleColorChanged = false;
   static Color optionSeletedColor = AppColors.opSelected();
 
   @override
   Widget build(BuildContext context) {
+    int capsulePos = map[0]['capsulePos']();
     setCapsuleColor(map[capsulePos + 1]);
     return Positioned(
       left: (AppConsts.opitonBtnSlimWL / (map.length - 1)) * capsulePos,
