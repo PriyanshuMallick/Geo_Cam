@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +5,6 @@ import 'package:geo_cam/camera_screen/camera_functions.dart';
 import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../camera_screen/camera_settings.dart';
 import '../widget/swipe_bar.dart';
@@ -109,7 +106,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
               top: CameraSettings.safeAreaCamTop,
               bottom: CameraSettings.safeAreaCamBottom,
               child: Padding(
-                padding: EdgeInsets.only(top: AppLayout.getHeight(52)),
+                padding: const EdgeInsets.only(top: 1),
+                // padding: EdgeInsets.only(top: AppLayout.getHeight(52)),
                 child: cameraPreview(),
               ),
             ),
@@ -262,12 +260,20 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   //? ---------------------------------------- To show camera preview ----------------------------------------
   FutureBuilder<void> cameraPreview() {
+    _cameraController.value = _cameraController.value.copyWith(
+      previewSize: Size(
+        AppConsts.screenWidth / 3,
+        AppConsts.screenHeight / 4,
+      ),
+    );
+
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return AspectRatio(
-            aspectRatio: CameraSettings.cameraRatio,
+            // aspectRatio: CameraSettings.cameraRatio,
+            aspectRatio: _cameraController.value.aspectRatio,
             child: CameraPreview(_cameraController),
           );
         }

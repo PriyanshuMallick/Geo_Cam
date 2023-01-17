@@ -34,7 +34,7 @@ class CameraSettings {
     1,
     3 / 4, // Default
     9 / 16,
-    AppConsts.screenWidth / AppConsts.screenHeight, // Full Screen
+    AppConsts.screenRatio, // Full Screen
   ];
 
   static double cameraRatio = cameraRatioOptions[cameraRatioCapsulePos];

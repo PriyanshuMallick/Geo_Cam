@@ -9,6 +9,7 @@ import '../Theme/app_consts.dart';
 import 'camera_settings.dart';
 
 class CameraFunctions {
+  //? ------------------------------------------ 📁 Save Files 📁 ------------------------------------------
   static void savefile(String path, {String? albumName}) async {
     await GallerySaver.saveImage(
       path,
@@ -17,6 +18,7 @@ class CameraFunctions {
     ).whenComplete(() => print("\n Image Saved \n"));
   }
 
+  //? ------------------------------------------ 📷 Flip Camera 📷 ------------------------------------------
   static void flipCamera(
     BuildContext context,
     CameraController cameraController,
@@ -48,6 +50,7 @@ class CameraFunctions {
     });
   }
 
+  //? ------------------------------------------ 📸 Capture Image 📸 ------------------------------------------
   static void captureImage(
     Future<void> initializeControllerFuture,
     CameraController cameraController,
@@ -68,12 +71,10 @@ class CameraFunctions {
     File imageFile = File(xFile.path);
 
     int currentUnix = DateTime.now().millisecondsSinceEpoch;
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final Directory tmpDir = await getTemporaryDirectory();
+    // final Directory directory = await getApplicationDocumentsDirectory(); // /data/user/0/com.example.geo_cam/app_flutter
+    final Directory tmpDir = await getTemporaryDirectory(); // /data/user/0/com.example.geo_cam/cache
     String fileFormat = imageFile.path.split('.').last;
 
-    // print('tmpDir.path: ${tmpDir.path}'); // /data/user/0/com.example.geo_cam/cache
-    // print('directory.path: ${directory.path}'); // /data/user/0/com.example.geo_cam/app_flutter
     // print('imageFile.path: ${imageFile.path}'); // /data/user/0/com.example.geo_cam/cache/CAP7743094702992046030.jpg
 
     String tmpImgPath = '${tmpDir.path}/${AppConsts.appName}_$currentUnix.$fileFormat';
@@ -85,10 +86,6 @@ class CameraFunctions {
       albumName: AppConsts.appName,
     );
 
-    // await imageFile.delete();
-
-    // setState(() {
-    // capturedImages.add(File(xFile.path));
-    // });
+    await imageFile.delete();
   }
 }
