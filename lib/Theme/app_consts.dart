@@ -5,6 +5,11 @@
 import '../utils/app_layout.dart';
 
 class AppConsts {
+  static const String appName = "GeoCam";
+  static final double screenHeight = AppLayout.getScreenHeight();
+  static final double screenWidth = AppLayout.getScreenWidth();
+  static final double screenRatio = screenWidth / screenHeight;
+
   static const double menuPadH = 12;
   static const double menuPadV = 2;
 

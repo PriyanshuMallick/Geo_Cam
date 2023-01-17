@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:geo_cam/camera_screen/camera_settings.dart';
 import 'package:geo_cam/theme/app_colors.dart';
 
-List<Map<int, dynamic>> bottomSheetSlimMenus = [
+final List<Map<int, dynamic>> bottomSheetSlimMenus = [
   {
     //? ------------------------------------- Timer: -------------------------------------
     0: {
-      'settings': CameraSettings.timerSettings,
-      'setting': CameraSettings.timer,
+      'options': () => CameraSettings.timerOptions,
+      'selectOption': (int optionIndex) => CameraSettings.timer = CameraSettings.timerOptions[optionIndex],
+      'capsulePos': () => CameraSettings.timerCapsulePos,
+      'setCapsulePos': (int pos) => {
+            CameraSettings.timer = CameraSettings.timerOptions[pos],
+            CameraSettings.timerCapsulePos = pos,
+          },
     },
     1: {
       'text': null,
@@ -26,10 +31,15 @@ List<Map<int, dynamic>> bottomSheetSlimMenus = [
     },
   },
   {
-    //? ------------------------------------- Ratio: -------------------------------------
+    //? ------------------------------------- Camera Ratio: -------------------------------------
     0: {
-      'settings': CameraSettings.cameraRatioSettings,
-      'setting': CameraSettings.cameraRatio,
+      'options': () => CameraSettings.cameraRatioOptions,
+      'selectOption': (int option) => CameraSettings.cameraRatio = CameraSettings.cameraRatioOptions[option],
+      'capsulePos': () => CameraSettings.cameraRatioCapsulePos,
+      'setCapsulePos': (int pos) => {
+            CameraSettings.cameraRatio = CameraSettings.cameraRatioOptions[pos],
+            CameraSettings.cameraRatioCapsulePos = pos,
+          },
     },
     1: {
       'text': '1:1',

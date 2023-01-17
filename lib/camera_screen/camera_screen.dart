@@ -1,12 +1,13 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_cam/camera_screen/camera_menu_widget.dart';
+import 'package:flutter/services.dart';
+import 'package:geo_cam/camera_screen/camera_functions.dart';
+import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 
 import '../camera_screen/camera_settings.dart';
+import '../widget/swipe_bar.dart';
 import 'camera_menu_funtions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_consts.dart';
@@ -20,12 +21,12 @@ class CameraScreen extends StatefulWidget {
   State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<CameraScreen> {
+class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver {
   late CameraController _cameraController; // Camera Controller
   //Future to wait until camera initializes
   late Future<void> _initializeControllerFuture;
   // final int _initialCamera = 0;
-  List<File> capturedImages = [];
+  // List<File> capturedImages = [];
 
   void initializeCamera({
     CameraDescription? description,
@@ -39,7 +40,9 @@ class _CameraScreenState extends State<CameraScreen> {
       // Define the resolution to use.
       resolutionPreset ?? CameraSettings.resolution,
       //Enable Audio?
-      enableAudio: audio ?? false,
+      enableAudio: audio ?? CameraSettings.isVideoMode,
+
+      // imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -56,14 +59,36 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void initState() {
-    super.initState();
+    // Hide the status bar
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);
+
     initializeCamera();
+    super.initState();
   }
 
   @override
   void dispose() {
     _cameraController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final CameraController cameraController = _cameraController;
+
+    if (!cameraController.value.isInitialized) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+      return;
+    }
+
+    if (state == AppLifecycleState.resumed) {
+      initializeCamera(description: cameraController.description);
+      return;
+    }
   }
 
   //? -------------------------- UI --------------------------
@@ -81,7 +106,8 @@ class _CameraScreenState extends State<CameraScreen> {
               top: CameraSettings.safeAreaCamTop,
               bottom: CameraSettings.safeAreaCamBottom,
               child: Padding(
-                padding: EdgeInsets.only(top: AppLayout.getHeight(51)),
+                padding: const EdgeInsets.only(top: 1),
+                // padding: EdgeInsets.only(top: AppLayout.getHeight(52)),
                 child: cameraPreview(),
               ),
             ),
@@ -99,16 +125,16 @@ class _CameraScreenState extends State<CameraScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //? Flash Button
-                    TopMenuItem(fun: () => flashButton(), icon: Icons.flash_on_rounded),
+                    TopMenuItem(onTap: () => flashButton(), icon: Icons.flash_on_rounded),
 
                     //? File Button
-                    TopMenuItem(fun: () => fileButton(), icon: Icons.file_copy_outlined),
+                    TopMenuItem(onTap: () => fileButton(), icon: Icons.file_copy_outlined),
 
                     //? Folder Button
-                    TopMenuItem(fun: () => folderButton(), icon: Icons.folder_open_outlined),
+                    TopMenuItem(onTap: () => folderButton(), icon: Icons.folder_open_outlined),
 
                     //? Ham Menu Button
-                    TopMenuItem(fun: () => menuButton(), icon: Icons.menu_open_outlined)
+                    TopMenuItem(onTap: () => menuButton(), icon: Icons.menu_open_outlined)
                   ],
                 ),
               ),
@@ -149,64 +175,67 @@ class _CameraScreenState extends State<CameraScreen> {
                         Expanded(child: Container()),
 
                         //? Action Buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            //? Gallery Button
-                            GestureDetector(
-                              onTap: () => showGallery(),
-                              child: Container(
-                                height: AppLayout.getHeight(76),
-                                width: AppLayout.getWidth(76),
-                                decoration: BoxDecoration(
-                                  color: const Color(0x797D7D7D),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                      "assets/images/test/Wallpaper_1.jpg",
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(5)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //? Gallery Button
+                              GestureDetector(
+                                onTap: () => showGallery(),
+                                child: Container(
+                                  height: AppLayout.getHeight(65),
+                                  width: AppLayout.getWidth(65),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x797D7D7D),
+                                    image: const DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                        "assets/images/test/Wallpaper_1.jpg",
+                                      ),
+                                    ),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                              ),
+
+                              //? Stutter Button
+                              GestureDetector(
+                                onTap: () => captureImage(),
+                                child: Container(
+                                  height: AppLayout.getHeight(85),
+                                  width: AppLayout.getWidth(85),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50),
+                                    border: Border.all(
+                                      color: const Color(0x797D7D7D),
+                                      width: 2,
                                     ),
                                   ),
-                                  borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                            ),
 
-                            //? Stutter Button
-                            GestureDetector(
-                              onTap: () => captureImage(),
-                              child: Container(
-                                height: AppLayout.getHeight(91),
-                                width: AppLayout.getWidth(91),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border.all(
-                                    color: const Color(0x797D7D7D),
-                                    width: 2,
+                              //? Camera Flip Button
+                              GestureDetector(
+                                onTap: () => flipCamera(),
+                                child: Container(
+                                  height: AppLayout.getHeight(65),
+                                  width: AppLayout.getWidth(65),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x15FFFFFF),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  // child: const Icon(Icons.camera),
+                                  child: const Icon(
+                                    AppIcons.camera_flip,
+                                    color: Colors.white,
+                                    size: 40,
                                   ),
                                 ),
                               ),
-                            ),
-
-                            //? Camera Flip Button
-                            GestureDetector(
-                              onTap: () => flipCamera(),
-                              child: Container(
-                                height: AppLayout.getHeight(76),
-                                width: AppLayout.getWidth(76),
-                                decoration: BoxDecoration(
-                                  color: const Color(0x15FFFFFF),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                // child: const Icon(Icons.camera),
-                                child: const Icon(
-                                  AppIcons.camera_flip,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
 
                         Expanded(child: Container()),
@@ -227,15 +256,26 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  //? ----------------------- Internal Funtions -----------------------
+  //? ------------------------------------------ Internal Funtions ------------------------------------------
 
-  //? To show camera preview
+  //? ---------------------------------------- To show camera preview ----------------------------------------
   FutureBuilder<void> cameraPreview() {
+    _cameraController.value = _cameraController.value.copyWith(
+      previewSize: Size(
+        AppConsts.screenWidth / 3,
+        AppConsts.screenHeight / 4,
+      ),
+    );
+
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return CameraPreview(_cameraController);
+          return AspectRatio(
+            // aspectRatio: CameraSettings.cameraRatio,
+            aspectRatio: _cameraController.value.aspectRatio,
+            child: CameraPreview(_cameraController),
+          );
         }
 
         return const Center(child: CircularProgressIndicator());
@@ -246,38 +286,21 @@ class _CameraScreenState extends State<CameraScreen> {
   void captureImage() async {
     print('Camera Stutter Button Clicked');
 
-    // await _initializeControllerFuture;
-    // XFile xFile = await _cameraController.takePicture();
-
-    // setState(() {
-    //   capturedImages.add(File(xFile.path));
-    // });
+    CameraFunctions.captureImage(
+      _initializeControllerFuture,
+      _cameraController,
+    );
   }
 
   void flipCamera() {
     print('Camera Flip Button Clicked');
-    // if (widget.cameras.length < 2) {
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //     content: Text('Secondary camera not found!'),
-    //     duration: Duration(seconds: 2),
-    //   ));
-    //   return;
-    // }
 
-    // final lensDirection = _cameraController.description.lensDirection;
-
-    // CameraDescription newCam = widget.cameras.firstWhere(
-    //   (description) => lensDirection == CameraLensDirection.back
-    //       ? description.lensDirection == CameraLensDirection.front
-    //       : description.lensDirection == CameraLensDirection.back,
-    // );
-
-    // setState(() {
-    //   initializeCamera(
-    //     description: newCam,
-    //     audio: CameraSettings.isPhotoMode ? true : false,
-    //   );
-    // });
+    CameraFunctions.flipCamera(
+      context,
+      _cameraController,
+      setState,
+      initializeCamera,
+    );
   }
 
   void showGallery() {

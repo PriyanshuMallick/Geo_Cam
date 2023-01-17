@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'camera_screen/camera_screen.dart';
-import '___test/camera_screen_test.dart';
 import 'camera_screen/camera_settings.dart';
 import 'utils/handel_exceptions.dart';
 
@@ -16,7 +15,7 @@ void main() async {
   } catch (e) {
     handelCameraExceptions(e);
   }
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

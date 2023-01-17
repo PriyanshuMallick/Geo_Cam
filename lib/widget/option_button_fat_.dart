@@ -20,16 +20,16 @@ class OptionBtnFat extends StatefulWidget {
 class _OptionBtnFatState extends State<OptionBtnFat> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => setState(() {
-        widget.menu['setting'] = widget.menu['setting'] ? false : true;
+        widget.menu['onTap']();
       }),
       //? Button
       child: Container(
         height: AppLayout.getHeight(86),
         width: AppLayout.getWidth(160),
         decoration: BoxDecoration(
-          color: widget.menu['setting'] ? AppColors.opSelected() : AppColors.opNotSelected(),
+          color: widget.menu['isButtonOn']() ? AppColors.opSelected() : AppColors.opNotSelected(),
           borderRadius: BorderRadius.circular(27),
         ),
         child: Padding(

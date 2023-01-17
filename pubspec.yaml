@@ -41,6 +41,7 @@ dependencies:
   path:
   get: ^4.6.5
   google_fonts: ^3.0.1
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:
