@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geo_cam/camera_screen/camera_functions.dart';
 import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
@@ -44,7 +45,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       //Enable Audio?
       enableAudio: audio ?? CameraSettings.isVideoMode,
 
-      imageFormatGroup: ImageFormatGroup.jpeg,
+      // imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -279,51 +280,21 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   void captureImage() async {
     print('Camera Stutter Button Clicked');
 
-    await _initializeControllerFuture;
-    XFile xFile = await _cameraController.takePicture();
-
-    File imageFile = File(xFile.path);
-
-    int currentUnix = DateTime.now().millisecondsSinceEpoch;
-    final Directory directory = await getApplicationDocumentsDirectory();
-    String fileFormat = imageFile.path.split('.').last;
-
-    print('directory.path: ${directory.path}');
-    print('imageFile.path: ${imageFile.path}');
-
-    await imageFile.copy(
-      // '${directory.path}/$currentUnix.$fileFormat',
-      'Pictures/GeoCam/$currentUnix.$fileFormat',
+    CameraFunctions.captureImage(
+      _initializeControllerFuture,
+      _cameraController,
     );
-    // setState(() {
-    // capturedImages.add(File(xFile.path));
-    // });
   }
 
   void flipCamera() {
     print('Camera Flip Button Clicked');
-    // if (widget.cameras.length < 2) {
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //     content: Text('Secondary camera not found!'),
-    //     duration: Duration(seconds: 2),
-    //   ));
-    //   return;
-    // }
 
-    // final lensDirection = _cameraController.description.lensDirection;
-
-    // CameraDescription newCam = widget.cameras.firstWhere(
-    //   (description) => lensDirection == CameraLensDirection.back
-    //       ? description.lensDirection == CameraLensDirection.front
-    //       : description.lensDirection == CameraLensDirection.back,
-    // );
-
-    // setState(() {
-    //   initializeCamera(
-    //     description: newCam,
-    //     audio: CameraSettings.isPhotoMode ? true : false,
-    //   );
-    // });
+    CameraFunctions.flipCamera(
+      context,
+      _cameraController,
+      setState,
+      initializeCamera,
+    );
   }
 
   void showGallery() {

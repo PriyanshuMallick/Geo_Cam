@@ -22,7 +22,7 @@ class CameraSettings {
 
   //?------------------------------------ Set Timer------------------------------------
 
-  static int timerCapsulePos = 1;
+  static int timerCapsulePos = 0;
 
   static final List<int> timerOptions = [0, 3, 5, 10];
   static int timer = timerOptions[timerCapsulePos];

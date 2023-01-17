@@ -5,6 +5,7 @@
 import '../utils/app_layout.dart';
 
 class AppConsts {
+  static const String appName = "GeoCam";
   static final double screenHeight = AppLayout.getScreenHeight();
   static final double screenWidth = AppLayout.getScreenWidth();
 
