@@ -6,6 +6,7 @@ final List<Map<int, dynamic>> bottomSheetSlimMenus = [
   {
     //? ------------------------------------- Timer: -------------------------------------
     0: {
+      'needSetState': false,
       'options': () => CameraSettings.timerOptions,
       'selectOption': (int optionIndex) => CameraSettings.timer = CameraSettings.timerOptions[optionIndex],
       'capsulePos': () => CameraSettings.timerCapsulePos,
@@ -33,6 +34,7 @@ final List<Map<int, dynamic>> bottomSheetSlimMenus = [
   {
     //? ------------------------------------- Camera Ratio: -------------------------------------
     0: {
+      'needSetState': true,
       'options': () => CameraSettings.cameraRatioOptions,
       'selectOption': (int option) => CameraSettings.cameraRatio = CameraSettings.cameraRatioOptions[option],
       'capsulePos': () => CameraSettings.cameraRatioCapsulePos,

@@ -8,8 +8,9 @@ import '../theme/app_styles.dart';
 
 class OpitonBtnSlim extends StatefulWidget {
   final Map<int, dynamic> map;
+  final Function? setParentState;
 
-  const OpitonBtnSlim({super.key, required this.map});
+  const OpitonBtnSlim({super.key, required this.map, this.setParentState});
   @override
   State<OpitonBtnSlim> createState() => _OpitonBtnSlimState();
 }
@@ -57,6 +58,10 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
             Capsule.setCapsuleColor(map[i]),
 
             setState(() {}),
+            if (widget.setParentState != null)
+              {
+                widget.setParentState!(() {}),
+              },
           },
           child: Container(
             height: AppConsts.opitonBtnSlimHL,

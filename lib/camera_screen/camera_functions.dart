@@ -10,6 +10,7 @@ import 'camera_settings.dart';
 
 class CameraFunctions {
   //? ------------------------------------------ 📁 Save Files 📁 ------------------------------------------
+
   static void savefile(String path, {String? albumName}) async {
     await GallerySaver.saveImage(
       path,
@@ -19,6 +20,7 @@ class CameraFunctions {
   }
 
   //? ------------------------------------------ 📷 Flip Camera 📷 ------------------------------------------
+
   static void flipCamera(
     BuildContext context,
     CameraController cameraController,
@@ -51,6 +53,7 @@ class CameraFunctions {
   }
 
   //? ------------------------------------------ 📸 Capture Image 📸 ------------------------------------------
+
   static void captureImage(
     Future<void> initializeControllerFuture,
     CameraController cameraController,
@@ -67,6 +70,8 @@ class CameraFunctions {
       print("still taking images");
       return;
     }
+
+    // Todo: Fix Image Strech on Save/Capturing Image
 
     File imageFile = File(xFile.path);
 

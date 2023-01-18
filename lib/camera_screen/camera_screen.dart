@@ -8,6 +8,7 @@ import 'package:geo_cam/utils/app_layout.dart';
 
 import '../camera_screen/camera_settings.dart';
 import '../widget/swipe_bar.dart';
+import 'camera_bottom_sheet.dart';
 import 'camera_menu_funtions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_consts.dart';
@@ -25,8 +26,6 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   late CameraController _cameraController; // Camera Controller
   //Future to wait until camera initializes
   late Future<void> _initializeControllerFuture;
-  // final int _initialCamera = 0;
-  // List<File> capturedImages = [];
 
   void initializeCamera({
     CameraDescription? description,
@@ -48,6 +47,12 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     // Next, initialize the controller. This returns a Future.
     _initializeControllerFuture = _cameraController.initialize().then((_) {
       if (!mounted) return;
+      // Changing the Default preview aspect ratio to 3 / 4
+      // Because the default acpect ratio streaches the camera preview vertically
+      _cameraController.value = _cameraController.value.copyWith(
+        previewSize: const Size(4, 3),
+      );
+
       setState(() {});
     }).catchError((e) {
       if (e is CameraException) {
@@ -182,7 +187,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                             children: [
                               //? Gallery Button
                               GestureDetector(
-                                onTap: () => showGallery(),
+                                onTap: () => openGallery(),
                                 child: Container(
                                   height: AppLayout.getHeight(65),
                                   width: AppLayout.getWidth(65),
@@ -243,7 +248,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                     ),
                     SizedBox.expand(
                       child: GestureDetector(
-                        onPanUpdate: (details) => bottomSheet(context, details),
+                        onPanUpdate: (details) => CameraBottomSheet.show(context, details, setState),
                       ),
                     )
                   ],
@@ -260,21 +265,19 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
 
   //? ---------------------------------------- To show camera preview ----------------------------------------
   FutureBuilder<void> cameraPreview() {
-    _cameraController.value = _cameraController.value.copyWith(
-      previewSize: Size(
-        AppConsts.screenWidth / 3,
-        AppConsts.screenHeight / 4,
-      ),
-    );
-
     return FutureBuilder<void>(
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return AspectRatio(
-            // aspectRatio: CameraSettings.cameraRatio,
-            aspectRatio: _cameraController.value.aspectRatio,
-            child: CameraPreview(_cameraController),
+          return Transform.scale(
+            scale: .5,
+            child: ClipRect(
+              clipper: _ClipCameraPreview(),
+              child: Transform.scale(
+                scale: 2,
+                child: CameraPreview(_cameraController),
+              ),
+            ),
           );
         }
 
@@ -283,6 +286,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     );
   }
 
+  //? --------------------------------------------- To Take Photo ---------------------------------------------
   void captureImage() async {
     print('Camera Stutter Button Clicked');
 
@@ -292,6 +296,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     );
   }
 
+  //? --------------------------------------------- To Flip Camera ---------------------------------------------
   void flipCamera() {
     print('Camera Flip Button Clicked');
 
@@ -303,7 +308,26 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
     );
   }
 
-  void showGallery() {
+  //? --------------------------------------------- To Open Gallery App ---------------------------------------------
+  void openGallery() {
     print('Camera Gallery Button Clicked');
+  }
+}
+
+class _ClipCameraPreview extends CustomClipper<Rect> {
+  @override
+  Rect getClip(Size size) {
+    double cropHeight = AppConsts.screenWidth / CameraSettings.cameraRatio;
+    return Rect.fromLTWH(
+      0,
+      AppConsts.screenWidth - cropHeight / 2, // Top Padding to center the crop
+      AppConsts.screenWidth,
+      cropHeight,
+    );
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Rect> oldClipper) {
+    return true;
   }
 }
