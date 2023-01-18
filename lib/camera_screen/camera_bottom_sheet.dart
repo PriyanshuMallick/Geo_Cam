@@ -22,6 +22,7 @@ class CameraBottomSheet extends StatelessWidget {
       print('Going up');
       print("Showing Bottom Sheet");
       showModalBottomSheet(
+          backgroundColor: Colors.transparent,
           context: context,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
@@ -44,10 +45,11 @@ class CameraBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppLayout.getHeight(470),
+      // height: AppLayout.getHeight(470),
+      height: AppLayout.getHeight(200),
       width: AppLayout.getScreenWidth(),
       decoration: const BoxDecoration(
-        color: Colors.black,
+        color: Color.fromARGB(0, 0, 0, 0),
         borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
       ),
       child: Column(
@@ -60,7 +62,8 @@ class CameraBottomSheet extends StatelessWidget {
   List<Widget> addBottomBtns() {
     List<Widget> list = [const SwipeBar()];
 
-    return list + addBottomFatMenuBtns() + addBottomSlimMenuBtns();
+    return list + addBottomSlimMenuBtns();
+    // return list + addBottomFatMenuBtns() + addBottomSlimMenuBtns();
   }
 
   List<Widget> addBottomFatMenuBtns() {

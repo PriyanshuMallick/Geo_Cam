@@ -270,11 +270,17 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Transform.scale(
-            scale: .5,
+            // scale: CameraSettings.cameraRatioCapsulePos < 2 ? 1 : 1 + CameraSettings.cameraRatio,
+            scale: 1,
             child: ClipRect(
+              // clipper: CameraSettings.cameraRatio == 1 ? _ClipCameraPreview() : null,
               clipper: _ClipCameraPreview(),
               child: Transform.scale(
-                scale: 2,
+                alignment: Alignment.topCenter,
+                scale: CameraSettings.cameraRatioCapsulePos < 2
+                    ? 1
+                    : 1 + y / CameraSettings.cameraRatio * CameraSettings.cameraRatio,
+                // scale: 2,
                 child: CameraPreview(_cameraController),
               ),
             ),
@@ -314,14 +320,19 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   }
 }
 
+double y = 0;
+
 class _ClipCameraPreview extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
-    double cropHeight = AppConsts.screenWidth / CameraSettings.cameraRatio;
+    // double x = size.width > size.height ? size.height : size.width;
+    double x = size.width;
+    double cropHeight = x / CameraSettings.cameraRatio;
+    y = x / cropHeight;
     return Rect.fromLTWH(
       0,
-      AppConsts.screenWidth - cropHeight / 2, // Top Padding to center the crop
-      AppConsts.screenWidth,
+      CameraSettings.cameraRatio == 1 ? cropHeight * 1 / 6 : 0, // Adds Top Padding to center the crop
+      size.width,
       cropHeight,
     );
   }
