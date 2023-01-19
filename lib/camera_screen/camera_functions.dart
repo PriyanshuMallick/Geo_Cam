@@ -16,7 +16,7 @@ class CameraFunctions {
       path,
       toDcim: albumName == null ? true : false,
       albumName: albumName,
-    ).whenComplete(() => print("\n Image Saved \n"));
+    ).whenComplete(() => print('\n Image Saved \n'));
   }
 
   //? ------------------------------------------ 📷 Flip Camera 📷 ------------------------------------------
@@ -67,7 +67,7 @@ class CameraFunctions {
     try {
       xFile = await cameraController.takePicture();
     } catch (e) {
-      print("still taking images");
+      print('still taking images');
       return;
     }
 

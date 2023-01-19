@@ -8,7 +8,7 @@ import '../utils/app_layout.dart';
 
 class AppConsts {
   //? -------------------------------------------- APP: Genral  --------------------------------------------
-  static const String appName = "Geo Cam";
+  static const String appName = 'Geo Cam';
   static final double screenHeight = AppLayout.getScreenHeight();
   static final double screenWidth = AppLayout.getScreenWidth();
   static final double screenRatio = screenWidth / screenHeight;

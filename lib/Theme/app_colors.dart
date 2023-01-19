@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 Map<String, int> theme = {
-  "buttons": 2,
-  "mapCardBG": 1,
+  'buttons': 2,
+  'mapCardBG': 1,
 };
 
 class AppColors {

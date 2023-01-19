@@ -1,15 +1,15 @@
 void flashButton() {
-  print("Flash Button Clicked");
+  print('Flash Button Clicked');
 }
 
 void fileButton() {
-  print("File Button Clicked");
+  print('File Button Clicked');
 }
 
 void folderButton() {
-  print("Folder Button Clicked");
+  print('Folder Button Clicked');
 }
 
 void menuButton() {
-  print("Ham Menu Button Clicked");
+  print('Ham Menu Button Clicked');
 }
