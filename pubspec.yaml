@@ -42,7 +42,11 @@ dependencies:
   get: ^4.6.5
   google_fonts: ^3.0.1
   gallery_saver: ^2.3.2
-  crop: ^0.5.4
+  geolocator: ^5.3.2+2
+  geocoding: ^2.0.5
+  fluttertoast: ^6.0.1
+  intl: ^0.18.0
+  gap: ^2.0.1
 
 dev_dependencies:
   flutter_test:

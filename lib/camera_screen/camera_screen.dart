@@ -6,7 +6,8 @@ import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 
-import '../camera_screen/camera_settings.dart';
+import '../settings/camera_settings.dart';
+import '../widget/map_card.dart';
 import '../widget/swipe_bar.dart';
 import 'camera_bottom_sheet.dart';
 import 'camera_menu_funtions.dart';
@@ -56,7 +57,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
       setState(() {});
     }).catchError((e) {
       if (e is CameraException) {
-        print("Camera Exception:\n${e.code}\n");
+        print('Camera Exception:\n${e.code}\n');
         handelCameraExceptions(e);
       }
     });
@@ -117,6 +118,13 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
               ),
             ),
 
+            //? ------------------------------------------ Geo Location Card ------------------------------------------
+            // ignore: prefer_const_constructors
+            Center(
+              // ignore: prefer_const_constructors
+              child: MapCard(),
+            ),
+
             //? ----------------------------------------------- Top Menu -----------------------------------------------
             Container(
               padding: const EdgeInsets.symmetric(
@@ -170,7 +178,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Photo",
+                                'Photo',
                                 style: AppStyles.menuText,
                               ),
                             ],
@@ -196,7 +204,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                                     image: const DecorationImage(
                                       fit: BoxFit.cover,
                                       image: AssetImage(
-                                        "assets/images/test/Wallpaper_1.jpg",
+                                        'assets/images/test/Wallpaper_1.jpg',
                                       ),
                                     ),
                                     borderRadius: BorderRadius.circular(50),

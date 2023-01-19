@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_cam/Theme/app_icons.dart';
-import 'package:geo_cam/camera_screen/camera_settings.dart';
+import 'package:geo_cam/settings/camera_settings.dart';
 
 List<Map<String, dynamic>> bottomSheetFatMenus = [
   {
