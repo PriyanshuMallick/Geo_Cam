@@ -15,11 +15,11 @@ class DateStream extends StatefulWidget {
 
 class _DateStreamState extends State<DateStream> {
   final Stream<String> _dateStream = Stream.periodic(
-    const Duration(seconds: 1),
+    const Duration(minutes: 5),
     (x) => DateFormat(MapCardSettings.dateFormat).format(DateTime.now()),
   );
 
-  late StreamSubscription<String> _dateSub;
+  late final StreamSubscription<String> _dateSub;
 
   String _date = '';
 

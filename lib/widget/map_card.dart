@@ -5,6 +5,7 @@ import 'package:geo_cam/theme/app_consts.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 import 'package:geo_cam/widget/map_card_datas/date_stream.dart';
+import 'package:geo_cam/widget/map_card_datas/location_stream.dart';
 
 import '../settings/app_settings.dart';
 import '../theme/app_colors.dart';
@@ -105,64 +106,40 @@ class _MapCardState extends State<MapCard> {
     List<Widget> list = [];
 
     //? Address
-    if (MapCardSettings.isAddressShort) {
+    if (MapCardSettings.isAddressLong) {
       list.add(
-        Text(
-          'Address: ',
+        LocationStream(
+          mode: GeoLocationDetailMode.more,
           style: AppStyles.mapCardText,
         ),
       );
     }
 
-    //? Date & Time
-    // if (GeoLocCardSettings.isDate || GeoLocCardSettings.isTime) {
+    // if (MapCardSettings.isAddressShort) {
     //   list.add(
-    //     Row(
-    //       children: [
-    //         if (GeoLocCardSettings.isDate)
-    //           Text(
-    //             GeoLocCardFuns.getDate(),
-    //             style: AppStyles.mapCardText,
-    //           ),
-    //         Gap(AppLayout.getWidth(3)),
-    //         if (GeoLocCardSettings.isTime)
-    //           Text(
-    //             GeoLocCardFuns.getTime(),
-    //             style: AppStyles.mapCardText,
-    //           ),
-    //       ],
+    //     LocationStream(
+    //       mode: GeoLocationDetailMode.less,
+    //       style: AppStyles.mapCardText,
     //     ),
     //   );
-    //   //   if (GeoLocCardSettings.isTime) {
-    //   //     Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   //       setState(() {});
-    //   //     });
-    //   //   }
     // }
-    // if (GeoLocCardSettings.isDate || GeoLocCardSettings.isTime) {
+
+    // if (MapCardSettings.isLongLat) {
     //   list.add(
-    //     Row(
-    //       children: [
-    //         if (GeoLocCardSettings.isDate)
-    //           Text(
-    //             GeoLocCardFuns.getDate(),
-    //             style: AppStyles.mapCardText,
-    //           ),
-    //         Gap(AppLayout.getWidth(3)),
-    //         if (GeoLocCardSettings.isTime)
-    //           Text(
-    //             GeoLocCardFuns.getTime(),
-    //             style: AppStyles.mapCardText,
-    //           ),
-    //       ],
+    //     LocationStream(
+    //       mode: GeoLocationDetailMode.latlong,
+    //       style: AppStyles.mapCardText,
     //     ),
     //   );
+    // }
+
+    //? Date & Time
     if (MapCardSettings.isDate || MapCardSettings.isTime) {
       list.add(
         Row(
           children: [
             if (MapCardSettings.isDate) const DateStream(),
-            Gap(AppLayout.getWidth(3)),
+            if (MapCardSettings.isDate) Gap(AppLayout.getWidth(3)),
             if (MapCardSettings.isTime) const TimeStream(),
           ],
         ),
