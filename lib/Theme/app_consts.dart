@@ -17,10 +17,15 @@ class AppConsts {
   static const double menuPadV = 2;
 
   //? ----------------------------------------- Opiton Button Slim  -----------------------------------------
-  static final double opitonBtnSlimHL = AppLayout.getHeightPercent(7);
-  static final double opitonBtnSlimWL = AppLayout.getWidthPercent(85);
-  static final double opitonBtnSlimHS = AppLayout.getHeightPercent(4.5);
-  static final double opitonBtnSlimWS = AppLayout.getWidthPercent(85 / 4);
+  // ignore: prefer_final_fields
+  static double _opBtnSlimH = 38;
+  static const double _opBtnSlimW = 85;
+
+  static final double opBtnSlimPad = AppLayout.getHeight(4);
+  static double opBtnSlimH = AppLayout.getHeight(_opBtnSlimH);
+  static final double opBtnSlimW = AppLayout.getWidthPercent(_opBtnSlimW);
+  static double opBtnSlimCapH = AppLayout.getHeight(_opBtnSlimH);
+  static final double opBtnSlimCapW = AppLayout.getWidthPercent(_opBtnSlimW / 4);
 
   //? ----------------------------------------- Map Location Card  -----------------------------------------
   static final double locCardPad = AppLayout.getWidth(5);

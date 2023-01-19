@@ -121,10 +121,11 @@ class _LocationStreamState extends State<LocationStream> {
     }).catchError((e) {
       debugPrint(e);
     });
+
+    await _getAddressFromLatLng(_currentPosition);
   }
 
-  Future<void> _getAddressFromLatLng(Position position) async {
-    await _getCurrentPosition();
+  Future<void> _getAddressFromLatLng(Position? position) async {
     await placemarkFromCoordinates(_currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../funtionality_list/bottom_sheet_fat_menu_list.dart';
 import '../funtionality_list/bottom_sheet_slim_menu_list.dart';
-import '../utils/app_layout.dart';
 import '../widget/option_button_fat_.dart';
 import '../widget/option_button_slim.dart';
 import '../widget/swipe_bar.dart';
@@ -45,11 +44,11 @@ class CameraBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: AppLayout.getHeight(470),
-      height: AppLayout.getHeight(200),
-      width: AppLayout.getScreenWidth(),
+      // height: AppLayout.getHeight(700),
+      // height: AppLayout.getHeight(200),
+      // width: AppLayout.getScreenWidth(),
       decoration: const BoxDecoration(
-        color: Color.fromARGB(0, 0, 0, 0),
+        color: Colors.black,
         borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
       ),
       child: Column(
@@ -62,8 +61,8 @@ class CameraBottomSheet extends StatelessWidget {
   List<Widget> addBottomBtns() {
     List<Widget> list = [const SwipeBar()];
 
-    return list + addBottomSlimMenuBtns();
-    // return list + addBottomFatMenuBtns() + addBottomSlimMenuBtns();
+    // return list + addBottomSlimMenuBtns();
+    return list + addBottomFatMenuBtns() + addBottomSlimMenuBtns();
   }
 
   List<Widget> addBottomFatMenuBtns() {
@@ -78,6 +77,7 @@ class CameraBottomSheet extends StatelessWidget {
           ],
         ),
       );
+      // list.add(Gap(AppLayout.getHeight(10)));
     }
     return list;
   }
@@ -90,6 +90,7 @@ class CameraBottomSheet extends StatelessWidget {
             ? OpitonBtnSlim(map: bottomSheetSlimMenus[i], setParentState: setState)
             : OpitonBtnSlim(map: bottomSheetSlimMenus[i]),
       );
+      // list.add(Gap(AppLayout.getHeight(10)));
     }
 
     return list;
