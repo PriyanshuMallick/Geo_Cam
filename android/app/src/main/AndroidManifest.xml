@@ -2,8 +2,10 @@
     package="com.example.geo_cam">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-   <application
+    <application
         android:label="geo_cam"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"

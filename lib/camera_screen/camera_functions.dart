@@ -6,7 +6,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../Theme/app_consts.dart';
-import 'camera_settings.dart';
+import '../settings/camera_settings.dart';
 
 class CameraFunctions {
   //? ------------------------------------------ 📁 Save Files 📁 ------------------------------------------
@@ -16,7 +16,7 @@ class CameraFunctions {
       path,
       toDcim: albumName == null ? true : false,
       albumName: albumName,
-    ).whenComplete(() => print("\n Image Saved \n"));
+    ).whenComplete(() => print('\n Image Saved \n'));
   }
 
   //? ------------------------------------------ 📷 Flip Camera 📷 ------------------------------------------
@@ -67,7 +67,7 @@ class CameraFunctions {
     try {
       xFile = await cameraController.takePicture();
     } catch (e) {
-      print("still taking images");
+      print('still taking images');
       return;
     }
 

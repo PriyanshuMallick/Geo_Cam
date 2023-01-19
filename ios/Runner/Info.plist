@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>NSPhotoLibraryUsageDescription </key>
-	<string>Geo Cam wants to access your camera photo library to save images/videos in your phone storage</string>
-	
-	<key>NSCameraUsageDescription</key>
-	<string>Geo Cam wants to access your camera</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Geo Cam wants to access your mic</string>
-
+<dict>	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -55,5 +47,22 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!--? Storage -->
+	<key>NSPhotoLibraryUsageDescription </key>
+	<string>Geo Cam wants to access your camera photo library to save images/videos in your phone storage</string>
+	
+	<!--? Camera -->
+	<key>NSCameraUsageDescription</key>
+	<string>Geo Cam wants to access your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Geo Cam wants to access your mic</string>
+
+	<!--? Location -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Geo Cam needs access to location when open.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Geo Cam needs access to location when in the background.</string>
+
 </dict>
 </plist>

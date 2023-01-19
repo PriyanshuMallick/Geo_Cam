@@ -15,12 +15,12 @@ class CameraBottomSheet extends StatelessWidget {
   }) : super(key: key);
 
   static void show(BuildContext context, DragUpdateDetails details, Function setState) {
-    print("Bottom Sheet Clicked");
+    print('Bottom Sheet Clicked');
 
     // Swiping in top direction.
     if (details.delta.dy < 0) {
       print('Going up');
-      print("Showing Bottom Sheet");
+      print('Showing Bottom Sheet');
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           context: context,
