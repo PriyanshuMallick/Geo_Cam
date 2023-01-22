@@ -8,9 +8,28 @@ class AppStyles {
     color: AppColors.textColor1,
     fontWeight: FontWeight.w900,
   );
-  static final TextStyle mapCardText = GoogleFonts.roboto(
+
+  static final TextStyle timerText = GoogleFonts.roboto(
     fontSize: 12,
     color: AppColors.mapCardTextColor(),
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle settingText2 = GoogleFonts.roboto(
+    fontSize: 20,
+    color: AppColors.mapCardTextColor(),
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle mapCardText2 = GoogleFonts.roboto(
+    fontSize: 11,
+    color: AppColors.mapCardTextColor(),
+    fontWeight: FontWeight.w800,
+  );
+
+  static final TextStyle mapCardText1 = GoogleFonts.roboto(
+    fontSize: 17,
+    color: AppColors.mapCardTextColor(),
+    fontWeight: FontWeight.w600,
   );
 }
