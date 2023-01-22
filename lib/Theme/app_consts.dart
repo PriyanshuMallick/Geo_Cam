@@ -16,9 +16,12 @@ class AppConsts {
   static const double menuPadH = 12;
   static const double menuPadV = 2;
 
+  //? ----------------------------------------- Opiton Button Fat  -----------------------------------------
+  static final opBtnFatH = AppLayout.getHeight(86);
+  static final opBtnFatW = AppLayout.getWidth(160);
+
   //? ----------------------------------------- Opiton Button Slim  -----------------------------------------
-  // ignore: prefer_final_fields
-  static double _opBtnSlimH = 38;
+  static const double _opBtnSlimH = 38;
   static const double _opBtnSlimW = 85;
 
   static final double opBtnSlimPad = AppLayout.getHeight(4);
