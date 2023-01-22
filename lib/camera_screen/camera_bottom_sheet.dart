@@ -21,22 +21,26 @@ class CameraBottomSheet extends StatelessWidget {
       print('Going up');
       print('Showing Bottom Sheet');
       showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          context: context,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(35),
-            ),
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(35),
           ),
-          builder: (context) {
-            return CameraBottomSheet(setState: setState);
-          });
+        ),
+        builder: (context) {
+          return Wrap(
+            children: [CameraBottomSheet(setState: setState)],
+          );
+        },
+      );
     }
 
     // Swiping in bottom direction.
     if (details.delta.dy > 0) {
       print('Going down');
-      Navigator.pop(context);
+      // Navigator.pop(context);
       return;
     }
   }
@@ -44,9 +48,6 @@ class CameraBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: AppLayout.getHeight(700),
-      // height: AppLayout.getHeight(200),
-      // width: AppLayout.getScreenWidth(),
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
@@ -59,7 +60,12 @@ class CameraBottomSheet extends StatelessWidget {
   }
 
   List<Widget> addBottomBtns() {
-    List<Widget> list = [const SwipeBar()];
+    List<Widget> list = [
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 6),
+        child: SwipeBar(),
+      )
+    ];
 
     // return list + addBottomSlimMenuBtns();
     return list + addBottomFatMenuBtns() + addBottomSlimMenuBtns();
@@ -69,12 +75,15 @@ class CameraBottomSheet extends StatelessWidget {
     List<Widget> list = [];
     for (int i = 0; i < bottomSheetFatMenus.length; i++) {
       list.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            OptionBtnFat(menu: bottomSheetFatMenus[i]),
-            OptionBtnFat(menu: bottomSheetFatMenus[++i]),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              OptionBtnFat(menu: bottomSheetFatMenus[i]),
+              OptionBtnFat(menu: bottomSheetFatMenus[++i]),
+            ],
+          ),
         ),
       );
       // list.add(Gap(AppLayout.getHeight(10)));
@@ -86,9 +95,12 @@ class CameraBottomSheet extends StatelessWidget {
     List<Widget> list = [];
     for (int i = 0; i < bottomSheetSlimMenus.length; i++) {
       list.add(
-        bottomSheetSlimMenus[i][0]['needSetState']
-            ? OpitonBtnSlim(map: bottomSheetSlimMenus[i], setParentState: setState)
-            : OpitonBtnSlim(map: bottomSheetSlimMenus[i]),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: bottomSheetSlimMenus[i][0]['needSetState']
+              ? OpitonBtnSlim(map: bottomSheetSlimMenus[i], setParentState: setState)
+              : OpitonBtnSlim(map: bottomSheetSlimMenus[i]),
+        ),
       );
       // list.add(Gap(AppLayout.getHeight(10)));
     }
