@@ -110,7 +110,7 @@ class _MapCardState extends State<MapCard> {
       list.add(
         LocationStream(
           mode: GeoLocationDetailMode.more,
-          style: AppStyles.mapCardText,
+          style: AppStyles.mapCardText2,
         ),
       );
     }

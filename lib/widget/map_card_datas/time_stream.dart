@@ -51,7 +51,7 @@ class _TimeStreamState extends State<TimeStream> {
   Widget build(BuildContext context) {
     return Text(
       _time,
-      style: AppStyles.mapCardText,
+      style: AppStyles.mapCardText2,
     );
   }
 }

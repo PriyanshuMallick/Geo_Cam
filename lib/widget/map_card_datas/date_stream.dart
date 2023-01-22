@@ -51,7 +51,7 @@ class _DateStreamState extends State<DateStream> {
   Widget build(BuildContext context) {
     return Text(
       _date,
-      style: AppStyles.mapCardText,
+      style: AppStyles.mapCardText2,
     );
   }
 }
