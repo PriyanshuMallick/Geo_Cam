@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geo_cam/Theme/app_icons.dart';
 import 'package:geo_cam/settings/camera_settings.dart';
+import 'package:geo_cam/theme/app_text.dart';
 
 import '../settings/app_settings.dart';
 
@@ -36,7 +37,7 @@ List<Map<String, dynamic>> bottomSheetFatMenus = [
     'onTap': () => {
           AppSettings.isProVersion()
               ? AppSettings.isWatermark = AppSettings.isWatermark ? false : true
-              : Fluttertoast.showToast(msg: 'Buy App To remove watermark'),
+              : Fluttertoast.showToast(msg: AppTextBuyPro.watermark),
         },
     'isButtonOn': () => AppSettings.isWatermark,
     // 'icon': AppIcons.grid,
