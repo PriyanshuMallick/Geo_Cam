@@ -14,11 +14,11 @@ class SwipeBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Container(
-        width: 45,
+        width: 40,
         decoration: BoxDecoration(
             border: Border.all(
               color: AppColors.menuIcon(),
-              width: 1.5,
+              width: 1.7,
             ),
             borderRadius: BorderRadius.circular(5)),
       ),
