@@ -29,7 +29,7 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
         height: AppConsts.opBtnFatH,
         width: AppConsts.opBtnFatW,
         decoration: BoxDecoration(
-          color: widget.menu['isButtonOn']() ? AppColors.opSelected() : AppColors.opNotSelected(),
+          color: widget.menu['isButtonOn']() ? AppColors.opSelected : AppColors.opNotSelected,
           borderRadius: BorderRadius.circular(27),
         ),
         child: Row(
@@ -41,7 +41,7 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
               child: Icon(
                 widget.menu['icon'],
                 size: widget.menu['iconSize'],
-                color: AppColors.menuIcon(),
+                color: AppColors.menuIcon,
               ),
             ),
 

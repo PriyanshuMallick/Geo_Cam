@@ -17,7 +17,7 @@ class SwipeBar extends StatelessWidget {
         width: 40,
         decoration: BoxDecoration(
             border: Border.all(
-              color: AppColors.menuIcon(),
+              color: AppColors.menuIcon,
               width: 1.7,
             ),
             borderRadius: BorderRadius.circular(5)),
