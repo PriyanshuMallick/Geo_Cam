@@ -20,3 +20,22 @@ class TopMenuItem extends StatelessWidget {
     );
   }
 }
+
+class TopMenuItemAni extends StatelessWidget {
+  final Function() onTap;
+  final AnimatedIconData icon;
+  final Animation<double> progress;
+  const TopMenuItemAni({super.key, required this.onTap, required this.icon, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onTap,
+      icon: AnimatedIcon(
+        icon: icon,
+        progress: progress,
+        color: AppColors.menuIcon,
+      ),
+    );
+  }
+}
