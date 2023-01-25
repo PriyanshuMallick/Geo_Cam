@@ -109,8 +109,8 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
           children: [
             //? ------------------------------------------ Camera Live Preview ------------------------------------------
             SafeArea(
-              top: CameraSettings.safeAreaCamTop(),
-              bottom: CameraSettings.safeAreaCamBottom(),
+              top: CameraSettings.safeAreaCamTop,
+              bottom: CameraSettings.safeAreaCamBottom,
               child: Padding(
                 padding: const EdgeInsets.only(top: 1),
                 // padding: EdgeInsets.only(top: AppLayout.getHeight(52)),
