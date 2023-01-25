@@ -15,7 +15,7 @@ class TopMenuItem extends StatelessWidget {
       onPressed: onTap,
       icon: Icon(
         icon,
-        color: AppColors.menuIcon(),
+        color: AppColors.menuIcon,
       ),
     );
   }
