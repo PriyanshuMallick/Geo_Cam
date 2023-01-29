@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geo_cam/camera_screen/camera_settings.dart';
+import 'package:geo_cam/settings/camera_settings.dart';
 import 'package:geo_cam/theme/app_colors.dart';
 
 final List<Map<int, dynamic>> bottomSheetSlimMenus = [

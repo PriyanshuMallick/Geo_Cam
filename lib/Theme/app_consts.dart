@@ -2,10 +2,13 @@
 
 //? Padding
 
+import 'package:flutter/cupertino.dart';
+
 import '../utils/app_layout.dart';
 
 class AppConsts {
-  static const String appName = "GeoCam";
+  //? -------------------------------------------- APP: Genral  --------------------------------------------
+  static const String appName = 'Geo Cam';
   static final double screenHeight = AppLayout.getScreenHeight();
   static final double screenWidth = AppLayout.getScreenWidth();
   static final double screenRatio = screenWidth / screenHeight;
@@ -13,8 +16,24 @@ class AppConsts {
   static const double menuPadH = 12;
   static const double menuPadV = 2;
 
-  static final double opitonBtnSlimHL = AppLayout.getHeightPercent(5);
-  static final double opitonBtnSlimWL = AppLayout.getWidthPercent(85);
-  static final double opitonBtnSlimHS = AppLayout.getHeightPercent(4.5);
-  static final double opitonBtnSlimWS = AppLayout.getWidthPercent(85 / 4);
+  //? ----------------------------------------- Opiton Button Fat  -----------------------------------------
+  static final opBtnFatH = AppLayout.getHeight(86);
+  static final opBtnFatW = AppLayout.getWidth(160);
+
+  //? ----------------------------------------- Opiton Button Slim  -----------------------------------------
+  static const double _opBtnSlimH = 38;
+  static const double _opBtnSlimW = 85;
+
+  static final double opBtnSlimPad = AppLayout.getHeight(4);
+  static double opBtnSlimH = AppLayout.getHeight(_opBtnSlimH);
+  static final double opBtnSlimW = AppLayout.getWidthPercent(_opBtnSlimW);
+  static double opBtnSlimCapH = AppLayout.getHeight(_opBtnSlimH);
+  static final double opBtnSlimCapW = AppLayout.getWidthPercent(_opBtnSlimW / 4);
+
+  //? ----------------------------------------- Map Location Card  -----------------------------------------
+  static final double locCardPad = AppLayout.getWidth(5);
+  static final double locCardHeight = AppLayout.getWidth(110);
+  static final double locCardWidth = screenWidth - locCardHeight - locCardPad * 3 - 1;
+  static const double locCardBorderRoundVal = 10;
+  static const Radius locCardBorderRound = Radius.circular(locCardBorderRoundVal);
 }

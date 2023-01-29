@@ -1,10 +1,10 @@
 //? ------------------------------------- Option Button: Fat -------------------------------------
 
 import 'package:flutter/material.dart';
+import 'package:geo_cam/theme/app_consts.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_styles.dart';
-import '../utils/app_layout.dart';
 
 class OptionBtnFat extends StatefulWidget {
   final Map menu;
@@ -26,32 +26,35 @@ class _OptionBtnFatState extends State<OptionBtnFat> {
       }),
       //? Button
       child: Container(
-        height: AppLayout.getHeight(86),
-        width: AppLayout.getWidth(160),
+        height: AppConsts.opBtnFatH,
+        width: AppConsts.opBtnFatW,
         decoration: BoxDecoration(
           color: widget.menu['isButtonOn']() ? AppColors.opSelected() : AppColors.opNotSelected(),
           borderRadius: BorderRadius.circular(27),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              //? Icon
-              Icon(
+        child: Row(
+          children: [
+            //? Icon
+            Container(
+              width: AppConsts.opBtnFatW * .3,
+              alignment: Alignment.centerRight,
+              child: Icon(
                 widget.menu['icon'],
                 size: widget.menu['iconSize'],
                 color: AppColors.menuIcon(),
               ),
+            ),
 
-              //? Text
-              Text(
+            //? Text
+            SizedBox(
+              width: AppConsts.opBtnFatW * .7,
+              child: Text(
                 widget.menu['name'].toUpperCase(),
                 style: AppStyles.menuText,
                 textAlign: TextAlign.center,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

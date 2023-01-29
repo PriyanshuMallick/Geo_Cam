@@ -19,24 +19,31 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppConsts.opitonBtnSlimHL,
-      width: AppConsts.opitonBtnSlimWL,
+      height: AppConsts.opBtnSlimH + AppConsts.opBtnSlimPad,
+      width: AppConsts.opBtnSlimW + AppConsts.opBtnSlimPad,
+
+      // height: AppConsts.opBtnSlimH + AppConsts.opBtnSlimPad,
+      // width: AppConsts.opBtnSlimW + AppConsts.opBtnSlimPad,
       decoration: BoxDecoration(
         color: AppColors.opNotSelected(),
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Stack(
-        children: [
-          Capsule(
-            map: widget.map,
+      child: Center(
+        child: SizedBox(
+          height: AppConsts.opBtnSlimH,
+          width: AppConsts.opBtnSlimW,
+          child: Stack(
+            children: [
+              Capsule(
+                map: widget.map,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: addElementsFromMap(widget.map),
+              ),
+            ],
           ),
-          SizedBox.expand(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: addElementsFromMap(widget.map),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -64,8 +71,8 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
               },
           },
           child: Container(
-            height: AppConsts.opitonBtnSlimHL,
-            width: AppConsts.opitonBtnSlimWL / map.length,
+            height: AppConsts.opBtnSlimH,
+            width: AppConsts.opBtnSlimW / map.length,
             color: Colors.transparent,
             child: Center(
               child: map[i]['text'] != null
@@ -104,19 +111,19 @@ class Capsule extends StatelessWidget {
     int capsulePos = map[0]['capsulePos']();
     setCapsuleColor(map[capsulePos + 1]);
     return Positioned(
-      left: (AppConsts.opitonBtnSlimWL / (map.length - 1)) * capsulePos,
-      top: (AppConsts.opitonBtnSlimHL - AppConsts.opitonBtnSlimHS) / 2,
+      left: (AppConsts.opBtnSlimW / (map.length - 1)) * capsulePos,
+      top: (AppConsts.opBtnSlimH - AppConsts.opBtnSlimCapH) / 2,
       child: Center(
         child: Container(
-          height: AppConsts.opitonBtnSlimHS,
-          width: AppConsts.opitonBtnSlimWS,
+          height: AppConsts.opBtnSlimCapH,
+          width: AppConsts.opBtnSlimCapW,
           decoration: BoxDecoration(
               color: optionSeletedColor,
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
                 strokeAlign: StrokeAlign.center,
                 color: Colors.transparent,
-                width: AppConsts.opitonBtnSlimHL - AppConsts.opitonBtnSlimHS,
+                width: AppConsts.opBtnSlimH - AppConsts.opBtnSlimCapH,
               )),
         ),
       ),

@@ -16,9 +16,8 @@ class CameraSettings {
   static bool isMirror = false;
   static bool isGrid = false;
   static bool isSound = false;
-  static bool isWatermark = false;
   static bool isSaveOriginal = false;
-  static bool isMapTag = false;
+  static bool isMapTag = true;
 
   //?------------------------------------ Set Timer------------------------------------
 
