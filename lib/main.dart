@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-import 'camera_screen/camera_screen.dart';
+import 'screens/camera_screen/camera_screen.dart';
 import 'settings/camera_settings.dart';
 import 'utils/handel_exceptions.dart';
 

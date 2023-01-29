@@ -36,7 +36,7 @@ class _MapCardState extends State<MapCard> {
                 vertical: AppLayout.getWidth(2),
               ),
               decoration: BoxDecoration(
-                color: AppColors.mapCardBG(),
+                color: AppColors.mapCardBG,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(AppConsts.locCardBorderRoundVal / 2),
                 ),
@@ -54,7 +54,7 @@ class _MapCardState extends State<MapCard> {
                   ),
                   Text(
                     AppConsts.appName,
-                    style: AppStyles.menuText,
+                    style: AppStyles.mapCardText,
                   )
                 ],
               ),
@@ -67,7 +67,7 @@ class _MapCardState extends State<MapCard> {
                 height: AppConsts.locCardHeight,
                 width: AppConsts.locCardHeight,
                 decoration: BoxDecoration(
-                    color: AppColors.mapCardBG(),
+                    color: AppColors.mapCardBG,
                     borderRadius: BorderRadius.circular(
                       AppConsts.locCardBorderRoundVal,
                     )),
@@ -78,7 +78,7 @@ class _MapCardState extends State<MapCard> {
                 height: AppConsts.locCardHeight,
                 width: AppConsts.locCardWidth,
                 decoration: BoxDecoration(
-                  color: AppColors.mapCardBG(),
+                  color: AppColors.mapCardBG,
                   borderRadius: AppSettings.isProVersion()
                       ? BorderRadius.circular(AppConsts.locCardBorderRoundVal)
                       : const BorderRadius.only(
