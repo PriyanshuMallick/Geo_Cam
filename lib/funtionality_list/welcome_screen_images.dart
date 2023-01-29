@@ -4,4 +4,9 @@ List<Map<String, String>> welcomeScreenImages = [
     'artistName': 'Jorgen Hendriksen',
     'artistID': '@jor9en',
   },
+  {
+    'image': 'assets/images/welcome_screen/jorgen-hendriksen-AKKoNkG3PJU-unsplash.jpg',
+    'artistName': 'Jorgen Hendriksen',
+    'artistID': '@jor9en',
+  },
 ];
