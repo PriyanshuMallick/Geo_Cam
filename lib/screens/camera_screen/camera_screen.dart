@@ -1,20 +1,20 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geo_cam/camera_screen/camera_functions.dart';
+import 'package:geo_cam/screens/camera_screen/camera_functions.dart';
 import 'package:geo_cam/widget/top_menu_items.dart';
 import 'package:geo_cam/theme/app_styles.dart';
 import 'package:geo_cam/utils/app_layout.dart';
 
-import '../settings/camera_settings.dart';
-import '../widget/map_card.dart';
-import '../widget/swipe_bar.dart';
+import '../../settings/camera_settings.dart';
+import '../../widget/map_card.dart';
+import '../../widget/swipe_bar.dart';
 import 'camera_bottom_sheet.dart';
 import 'camera_menu_funtions.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_consts.dart';
-import '../theme/app_icons.dart';
-import '../utils/handel_exceptions.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_consts.dart';
+import '../../theme/app_icons.dart';
+import '../../utils/handel_exceptions.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -102,7 +102,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgColor(),
+      backgroundColor: AppColors.bgColorCam,
       body: SizedBox(
         height: AppLayout.getScreenHeight(),
         child: Stack(
@@ -131,7 +131,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                 horizontal: AppConsts.menuPadH,
                 vertical: AppConsts.menuPadV,
               ),
-              color: AppColors.mainMenuBG(),
+              color: AppColors.mainMenuBG,
               width: AppLayout.getScreenWidth(),
               child: SafeArea(
                 child: Row(
@@ -147,7 +147,7 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
                     TopMenuItem(onTap: () => folderButton(), icon: Icons.folder_open_outlined),
 
                     //? Ham Menu Button
-                    TopMenuItem(onTap: () => menuButton(), icon: Icons.menu_open_outlined)
+                    TopMenuItem(onTap: () => menuButton(context), icon: Icons.menu_open_outlined)
                   ],
                 ),
               ),
@@ -156,110 +156,108 @@ class _CameraScreenState extends State<CameraScreen> with WidgetsBindingObserver
             //? ---------------------------------------------- Bottom Menu ----------------------------------------------
             Positioned(
               bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppConsts.menuPadH,
-                  vertical: AppConsts.menuPadV,
-                ),
-                color: AppColors.mainMenuBG(),
-                height: AppLayout.getHeight(244),
-                width: AppLayout.getScreenWidth(),
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        //? Swipe Bar
-                        const SwipeBar(),
+              child: GestureDetector(
+                onPanUpdate: (details) => CameraBottomSheet.show(context, details, setState),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppConsts.menuPadH,
+                    vertical: AppConsts.menuPadV,
+                  ),
+                  color: AppColors.mainMenuBG,
+                  height: AppLayout.getHeight(244),
+                  width: AppLayout.getScreenWidth(),
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          //? Swipe Bar
+                          const SwipeBar(),
 
-                        //? Camera Modes
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Photo',
-                                style: AppStyles.menuText,
-                              ),
-                            ],
+                          //? Camera Modes
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Photo',
+                                  style: AppStyles.menuText,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
 
-                        Expanded(child: Container()),
+                          Expanded(child: Container()),
 
-                        //? Action Buttons
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(5)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //? Gallery Button
-                              GestureDetector(
-                                onTap: () => openGallery(),
-                                child: Container(
-                                  height: AppLayout.getHeight(65),
-                                  width: AppLayout.getWidth(65),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0x797D7D7D),
-                                    image: const DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        'assets/images/test/Wallpaper_1.jpg',
+                          //? Action Buttons
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(5)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //? Gallery Button
+                                GestureDetector(
+                                  onTap: () => openGallery(),
+                                  child: Container(
+                                    height: AppLayout.getHeight(65),
+                                    width: AppLayout.getWidth(65),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0x797D7D7D),
+                                      image: const DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                          'assets/images/test/Wallpaper_1.jpg',
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                  ),
+                                ),
+
+                                //? Stutter Button
+                                GestureDetector(
+                                  onTap: () => captureImage(),
+                                  child: Container(
+                                    height: AppLayout.getHeight(85),
+                                    width: AppLayout.getWidth(85),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0x797D7D7D),
+                                        width: 2,
                                       ),
                                     ),
-                                    borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
-                              ),
 
-                              //? Stutter Button
-                              GestureDetector(
-                                onTap: () => captureImage(),
-                                child: Container(
-                                  height: AppLayout.getHeight(85),
-                                  width: AppLayout.getWidth(85),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(
-                                      color: const Color(0x797D7D7D),
-                                      width: 2,
+                                //? Camera Flip Button
+                                GestureDetector(
+                                  onTap: () => flipCamera(),
+                                  child: Container(
+                                    height: AppLayout.getHeight(65),
+                                    width: AppLayout.getWidth(65),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0x15FFFFFF),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    // child: const Icon(Icons.camera),
+                                    child: const Icon(
+                                      AppIcons.camera_flip,
+                                      color: Colors.white,
+                                      size: 40,
                                     ),
                                   ),
                                 ),
-                              ),
-
-                              //? Camera Flip Button
-                              GestureDetector(
-                                onTap: () => flipCamera(),
-                                child: Container(
-                                  height: AppLayout.getHeight(65),
-                                  width: AppLayout.getWidth(65),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0x15FFFFFF),
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  // child: const Icon(Icons.camera),
-                                  child: const Icon(
-                                    AppIcons.camera_flip,
-                                    color: Colors.white,
-                                    size: 40,
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
 
-                        Expanded(child: Container()),
-                      ],
-                    ),
-                    SizedBox.expand(
-                      child: GestureDetector(
-                        onPanUpdate: (details) => CameraBottomSheet.show(context, details, setState),
+                          Expanded(child: Container()),
+                        ],
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
             )

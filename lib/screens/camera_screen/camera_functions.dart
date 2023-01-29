@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../Theme/app_consts.dart';
-import '../settings/camera_settings.dart';
+import '../../Theme/app_consts.dart';
+import '../../settings/camera_settings.dart';
 
 class CameraFunctions {
   //? ------------------------------------------ 📁 Save Files 📁 ------------------------------------------

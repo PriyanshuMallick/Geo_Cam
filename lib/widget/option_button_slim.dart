@@ -25,7 +25,7 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
       // height: AppConsts.opBtnSlimH + AppConsts.opBtnSlimPad,
       // width: AppConsts.opBtnSlimW + AppConsts.opBtnSlimPad,
       decoration: BoxDecoration(
-        color: AppColors.opNotSelected(),
+        color: AppColors.opNotSelected,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Center(
@@ -84,7 +84,7 @@ class _OpitonBtnSlimState extends State<OpitonBtnSlim> {
                   : Icon(
                       map[i]['icon'],
                       size: map[i]['iconSize'],
-                      color: AppColors.menuIcon(),
+                      color: AppColors.menuIcon,
                     ),
             ),
           ),
@@ -104,7 +104,7 @@ class Capsule extends StatelessWidget {
   final Map<int, dynamic> map;
 
   static bool isCapsuleColorChanged = false;
-  static Color optionSeletedColor = AppColors.opSelected();
+  static Color optionSeletedColor = AppColors.opSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -118,13 +118,9 @@ class Capsule extends StatelessWidget {
           height: AppConsts.opBtnSlimCapH,
           width: AppConsts.opBtnSlimCapW,
           decoration: BoxDecoration(
-              color: optionSeletedColor,
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(
-                strokeAlign: StrokeAlign.center,
-                color: Colors.transparent,
-                width: AppConsts.opBtnSlimH - AppConsts.opBtnSlimCapH,
-              )),
+            color: optionSeletedColor,
+            borderRadius: BorderRadius.circular(25),
+          ),
         ),
       ),
     );
@@ -147,7 +143,7 @@ class Capsule extends StatelessWidget {
     // if Capsule color is changed and 'text' feild is not null
     // set Capsule color to default theme color
     if (isCapsuleColorChanged && !isNull) {
-      optionSeletedColor = AppColors.opSelected();
+      optionSeletedColor = AppColors.opSelected;
       isCapsuleColorChanged = false;
       return;
     }

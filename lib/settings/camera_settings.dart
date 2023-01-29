@@ -39,6 +39,15 @@ class CameraSettings {
   static double cameraRatio = cameraRatioOptions[cameraRatioCapsulePos];
 
   //?------------------ SafeArea for Camera Preview in the main Screen------------------
-  static bool safeAreaCamTop = true;
-  static bool safeAreaCamBottom = true;
+  static bool get safeAreaCamTop {
+    bool isSafeAreaTop = cameraRatio == 1 || cameraRatio == 3 / 4 ? true : false;
+    print('isSafeAreaTop: $isSafeAreaTop');
+    return isSafeAreaTop;
+  }
+
+  static bool get safeAreaCamBottom {
+    bool isSafeAreaBottom = cameraRatio == 1 || cameraRatio == 3 / 4 ? true : false;
+    print('isSafeAreaBottom: $isSafeAreaBottom');
+    return isSafeAreaBottom;
+  }
 }

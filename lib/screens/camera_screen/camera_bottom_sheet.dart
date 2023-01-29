@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../funtionality_list/bottom_sheet_fat_menu_list.dart';
-import '../funtionality_list/bottom_sheet_slim_menu_list.dart';
-import '../widget/option_button_fat_.dart';
-import '../widget/option_button_slim.dart';
-import '../widget/swipe_bar.dart';
+import '../../funtionality_list/bottom_sheet_fat_menu_list.dart';
+import '../../funtionality_list/bottom_sheet_slim_menu_list.dart';
+import '../../widget/option_button_fat_.dart';
+import '../../widget/option_button_slim.dart';
+import '../../widget/swipe_bar.dart';
 
 class CameraBottomSheet extends StatelessWidget {
   final Function setState;
